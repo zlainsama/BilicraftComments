@@ -1,0 +1,16 @@
+[
+{
+  "modid": "BilicraftComments",
+  "name": "BilicraftComments",
+  "description": "",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/zlainsama/bilicraftcomments",
+  "updateUrl": "https://github.com/zlainsama/bilicraftcomments/releases",
+  "authors": [ "zlainsama" ],
+  "credits": "kelas",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
