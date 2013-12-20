@@ -7,12 +7,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
-import lain.mods.laincraft.core.SharedConstants;
-import lain.mods.laincraft.utils.io.UnicodeInputStreamReader;
+import lain.mods.bilicraftcomments.BilicraftComments;
+import lain.mods.bilicraftcomments.io.UnicodeInputStreamReader;
 import net.minecraft.util.StringUtils;
+import com.google.common.collect.Sets;
 
 public class Blacklist
 {
@@ -34,7 +34,7 @@ public class Blacklist
 
     public static void load()
     {
-        File f = new File(SharedConstants.getMinecraftDirFile(), "BcC_Blacklist.txt");
+        File f = new File(BilicraftComments.rootDir, "BcC_Blacklist.txt");
         if (!f.exists())
             try
             {
@@ -67,7 +67,7 @@ public class Blacklist
         catch (Exception e)
         {
             instance = backup;
-            System.err.println("error loading comment blacklist: " + e.toString());
+            BilicraftComments.logger.warning("error loading comment blacklist: " + e.toString());
         }
         finally
         {
@@ -90,7 +90,7 @@ public class Blacklist
 
     public static void save()
     {
-        File f = new File(SharedConstants.getMinecraftDirFile(), "BcC_Blacklist.txt");
+        File f = new File(BilicraftComments.rootDir, "BcC_Blacklist.txt");
         if (!f.exists())
             try
             {
@@ -121,7 +121,7 @@ public class Blacklist
             }
             catch (Exception e)
             {
-                System.err.println("error saving comment blacklist: " + e.toString());
+                BilicraftComments.logger.warning("error saving comment blacklist: " + e.toString());
             }
             finally
             {
@@ -137,6 +137,6 @@ public class Blacklist
         }
     }
 
-    private Set<String> list = new HashSet();
+    private Set<String> list = Sets.newHashSet();
 
 }

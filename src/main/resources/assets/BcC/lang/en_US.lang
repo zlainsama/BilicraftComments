@@ -1,0 +1,17 @@
+﻿#en_US
+
+BcC_InternalError = There is an internal error occurred.
+BcC_NotInWhitelist = You need to be in comment whitelist to send comment.
+BcC_InBlacklist = You are in comment blacklist, so you can't send comment.
+BcC_TooFastToComment = You're fast! Aren't you? Take a break please.
+BcC_InvalidArguments = Some odd parameters are not allowed.
+BcC_OutdatedProtocol = Your client's protocol is outdated, please update your client mod.
+BcC_Broadcast_Usage = Usage: /bcc_broadcast <player> [mode] [lifespan] <text ... >
+BcC_Whitelist_Usage_Add = Usage: /bcc_whitelist_add <username>
+BcC_Whitelist_Usage_Remove = Usage: /bcc_whitelist_remove <username>
+BcC_Blacklist_Usage_Add = Usage: /bcc_blacklist_add <username>
+BcC_Blacklist_Usage_Remove = Usage: /bcc_blacklist_remove <username>
+BcC_Whitelist_Added = '%1$s' added to comment whitelist.
+BcC_Whitelist_Removed = '%1$s' removed from comment whitelist.
+BcC_Blacklist_Added = '%1$s' added to comment blacklist.
+BcC_Blacklist_Removed = '%1$s' removed from comment blacklist.

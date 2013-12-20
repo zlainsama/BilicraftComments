@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import lain.mods.bilicraftcomments.BilicraftComments;
 import lain.mods.bilicraftcomments.common.CommonProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -56,7 +57,7 @@ public class ClientProxy extends CommonProxy
         }
         catch (IOException e)
         {
-            System.err.println("error reading incoming comment: " + e.toString());
+            BilicraftComments.logger.warning("error reading incoming comment: " + e.toString());
         }
         finally
         {

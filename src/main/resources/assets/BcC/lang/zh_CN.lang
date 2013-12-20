@@ -1,0 +1,17 @@
+﻿#zh_CN
+
+BcC_InternalError = 发生了一个内部错误.
+BcC_NotInWhitelist = 你需要在弹幕白名单中来发送评论.
+BcC_InBlacklist = 你在弹幕黑名单中, 所以你不能发送评论.
+BcC_TooFastToComment = 你真快! 不是么? 请休息一下.
+BcC_InvalidArguments = 一些奇怪的参数是不被允许的.
+BcC_OutdatedProtocol = 你客户端的通讯协议已经过期, 请更新你的客户端MOD.
+BcC_Broadcast_Usage = 使用方法: /bcc_broadcast <玩家> [模式] [寿命] <文本 ... >
+BcC_Whitelist_Usage_Add = 使用方法: /bcc_whitelist_add <用户名>
+BcC_Whitelist_Usage_Remove = 使用方法: /bcc_whitelist_remove <用户名>
+BcC_Blacklist_Usage_Add = 使用方法: /bcc_blacklist_add <用户名>
+BcC_Blacklist_Usage_Remove = 使用方法: /bcc_blacklist_remove <用户名>
+BcC_Whitelist_Added = 已添加 '%1$s' 到弹幕白名单.
+BcC_Whitelist_Removed = 已将 '%1$s' 从弹幕白名单中移除.
+BcC_Blacklist_Added = 已添加 '%1$s' 到弹幕黑名单.
+BcC_Blacklist_Removed = 已将 '%1$s' 从弹幕黑名单中移除.

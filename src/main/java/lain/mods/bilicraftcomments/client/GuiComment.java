@@ -4,6 +4,7 @@ import lain.mods.bilicraftcomments.BilicraftComments;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -114,6 +115,8 @@ public class GuiComment extends GuiScreen
         }
     }
 
+    public static final ResourceLocation resTexture = new ResourceLocation("BcC", "gui/gui.png");
+
     public static boolean settingsOpened = false;
 
     public static int mode = 0;
@@ -147,7 +150,7 @@ public class GuiComment extends GuiScreen
         drawRect(2, height - 14, width - 2, height - 2, Integer.MIN_VALUE);
         inputField.drawTextBox();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        mc.renderEngine.bindTexture("/BcC/gui.png");
+        mc.renderEngine.bindTexture(resTexture);
         if (areaSettingsButton.isMouseHovering(par1, par2))
             drawRectTexture(areaSettingsButton.x, areaSettingsButton.y, 28, 28, 28, 0, zLevel);
         else
