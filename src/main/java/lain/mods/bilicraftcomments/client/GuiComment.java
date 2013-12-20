@@ -115,7 +115,7 @@ public class GuiComment extends GuiScreen
         }
     }
 
-    public static final ResourceLocation resTexture = new ResourceLocation("BcC", "gui/gui.png");
+    public static final ResourceLocation resTexture = new ResourceLocation("bilicraftcomments", "gui/gui.png");
 
     public static boolean settingsOpened = false;
 

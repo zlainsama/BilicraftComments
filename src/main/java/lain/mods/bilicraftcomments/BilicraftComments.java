@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import lain.mods.bilicraftcomments.common.CommonProxy;
 import lain.mods.bilicraftcomments.common.PacketHandler;
 import lain.mods.bilicraftcomments.common.Settings;
+import lain.mods.bilicraftcomments.utils.SimpleLanguageFileLoader;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.Mod;
@@ -21,7 +22,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 @Mod(modid = "BilicraftComments", useMetadata = true)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { "LC|BcC|R", "LC|BcC|D" }, packetHandler = PacketHandler.class)
@@ -146,8 +146,22 @@ public class BilicraftComments
 
         Settings.reload(config);
 
-        LanguageRegistry.instance().loadLocalization("assets/BcC/lang/en_US.lang", "en_US", false);
-        LanguageRegistry.instance().loadLocalization("assets/BcC/lang/zh_CN.lang", "zh_CN", false);
+        try
+        {
+            SimpleLanguageFileLoader.load("/assets/bilicraftcomments/lang/en_US.lang", "en_US");
+        }
+        catch (IOException e)
+        {
+            logger.warning("error loading en_US language file: " + e.toString());
+        }
+        try
+        {
+            SimpleLanguageFileLoader.load("/assets/bilicraftcomments/lang/zh_CN.lang", "zh_CN");
+        }
+        catch (IOException e)
+        {
+            logger.warning("error loading zh_CN language file: " + e.toString());
+        }
     }
 
     @Mod.EventHandler
