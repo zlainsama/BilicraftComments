@@ -14,14 +14,12 @@ import lain.mods.bilicraftcomments.common.CommonProxy;
 import lain.mods.bilicraftcomments.common.PacketHandler;
 import lain.mods.bilicraftcomments.common.Settings;
 import lain.mods.bilicraftcomments.utils.SimpleLanguageFileLoader;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 
 @Mod(modid = "BilicraftComments", useMetadata = true)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { "LC|BcC|R", "LC|BcC|D" }, packetHandler = PacketHandler.class)

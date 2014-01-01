@@ -2,7 +2,7 @@ package lain.mods.bilicraftcomments.common;
 
 import java.util.Set;
 import lain.mods.bilicraftcomments.BilicraftComments;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 import com.google.common.collect.Sets;
 
 public class Settings

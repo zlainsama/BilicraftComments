@@ -4,6 +4,7 @@ import lain.mods.bilicraftcomments.BilicraftComments;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.util.ChatComponentText;
 import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -204,7 +205,7 @@ public class Comment
         slot = -1;
         try
         {
-            client.ingameGUI.getChatGUI().addTranslatedMessage(text, new Object[0]);
+            client.ingameGUI.func_146158_b().func_146227_a(new ChatComponentText(text));
         }
         catch (Throwable ignored)
         {

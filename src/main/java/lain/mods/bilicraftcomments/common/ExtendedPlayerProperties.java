@@ -6,15 +6,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.EntityEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class ExtendedPlayerProperties implements IExtendedEntityProperties
 {
 
     public static class EventHandler
     {
-        @ForgeSubscribe
+        @SubscribeEvent
         public void onEntityConstructing(EntityEvent.EntityConstructing event)
         {
             if (event.entity instanceof EntityPlayerMP)
@@ -63,8 +63,9 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties
     {
         try
         {
+
             if (!arg0.hasKey(identifier))
-                arg0.setTag(identifier, new NBTTagCompound(identifier));
+                arg0.setTag(identifier, new NBTTagCompound());
             arg0.getCompoundTag(identifier).setLong("lastMark", timer.getLastMark());
         }
         catch (Exception e)
