@@ -67,7 +67,7 @@ public class Whitelist
         catch (Exception e)
         {
             instance = backup;
-            BilicraftComments.logger.warning("error loading comment whitelist: " + e.toString());
+            BilicraftComments.logger.warn("error loading comment whitelist", e);
         }
         finally
         {
@@ -121,7 +121,7 @@ public class Whitelist
             }
             catch (Exception e)
             {
-                BilicraftComments.logger.warning("error saving comment whitelist: " + e.toString());
+                BilicraftComments.logger.warn("error saving comment whitelist", e);
             }
             finally
             {

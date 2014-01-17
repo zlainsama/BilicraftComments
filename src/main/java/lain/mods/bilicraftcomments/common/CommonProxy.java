@@ -10,13 +10,11 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.PlayerNotFoundException;
 import net.minecraft.command.PlayerSelector;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.network.Packet;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.Player;
+import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 
 public class CommonProxy
 {
@@ -26,7 +24,6 @@ public class CommonProxy
     Translator msgInBlacklist = new Translator("BcC_InBlacklist");
     Translator msgTooFastToComment = new Translator("BcC_TooFastToComment");
     Translator msgInvalidArguments = new Translator("BcC_InvalidArguments");
-    Translator msgOutdatedProtocol = new Translator("BcC_OutdatedProtocol");
     Translator msgBroadcastUsage = new Translator("BcC_Broadcast_Usage");
     Translator msgWhitelistUsageAdd = new Translator("BcC_Whitelist_Usage_Add");
     Translator msgWhitelistUsageRemove = new Translator("BcC_Whitelist_Usage_Remove");
@@ -40,6 +37,10 @@ public class CommonProxy
     public void displayComment(INetworkManager manager, Packet250CustomPayload packet, Player player)
     {
     }
+    
+    public void displayComment(FMLProxyPacket packet)
+    {
+    }
 
     public void handleCommentRequest(EntityPlayerMP plr, String[] args)
     {
@@ -51,12 +52,12 @@ public class CommonProxy
                 msgInternalError.sendWithColor(plr, EnumChatFormatting.DARK_RED);
                 return;
             }
-            if (Settings.whitelistMode && !Whitelist.contains(plr.username))
+            if (Settings.whitelistMode && !Whitelist.contains(plr.getCommandSenderName()))
             {
                 msgNotInWhitelist.sendWithColor(plr, EnumChatFormatting.DARK_RED);
                 return;
             }
-            if (Blacklist.contains(plr.username))
+            if (Blacklist.contains(plr.getCommandSenderName()))
             {
                 msgInBlacklist.sendWithColor(plr, EnumChatFormatting.DARK_RED);
                 return;
@@ -83,98 +84,22 @@ public class CommonProxy
             }
             if (BilicraftComments.manager != null)
             {
-                if (!BilicraftComments.manager.hasPermission(plr.username, "BcC.commentMode." + mode))
+                if (!BilicraftComments.manager.hasPermission(plr.getCommandSenderName(), "BcC.commentMode." + mode))
                 {
                     msgInvalidArguments.sendWithColor(plr, EnumChatFormatting.DARK_RED);
                     return;
                 }
-                if (!BilicraftComments.manager.hasPermission(plr.username, "BcC.colorComments"))
+                if (!BilicraftComments.manager.hasPermission(plr.getCommandSenderName(), "BcC.colorComments"))
                     text = StringUtils.stripControlCodes(text);
             }
             BilicraftComments.logger.log(BilicraftComments.CommentLoggingLevel.level, String.format("[username:%s] [mode:%d] [lifespan:%d] %s", plr.username, mode, lifespan, text));
             prop.timer.markTime(plr.worldObj.getTotalWorldTime());
-            Packet packet = BilicraftComments.createDisplayPacket(mode, lifespan, EnumChatFormatting.RESET + plr.getTranslatedEntityName() + " > " + text);
+            Packet packet = BilicraftComments.createDisplayPacket(mode, lifespan, EnumChatFormatting.RESET + plr.getDisplayName() + " > " + text);
             for (Object o : FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().playerEntityList)
             {
                 if (o instanceof EntityPlayerMP)
-                    ((EntityPlayerMP) o).playerNetServerHandler.sendPacketToPlayer(packet);
+                    ((EntityPlayerMP) o).playerNetServerHandler.func_147359_a(p_147359_1_);.sendPacketToPlayer(packet);
             }
-        }
-    }
-
-    public void handleCommentRequest(INetworkManager manager, Packet250CustomPayload packet, Player player)
-    {
-        if (player instanceof EntityPlayerMP)
-        {
-            msgOutdatedProtocol.sendWithColor((EntityPlayerMP) player, EnumChatFormatting.DARK_RED);
-            // EntityPlayerMP plr = (EntityPlayerMP) player;
-            // ExtendedPlayerProperties prop = ExtendedPlayerProperties.getProperties(plr);
-            // if (prop == null)
-            // {
-            // msgInternalError.s(plr, EnumChatFormatting.DARK_RED.toString());
-            // return;
-            // }
-            // if (Settings.whitelistMode && !Whitelist.contains(plr.username))
-            // {
-            // msgNotInWhitelist.s(plr, EnumChatFormatting.DARK_RED.toString());
-            // return;
-            // }
-            // if (Blacklist.contains(plr.username))
-            // {
-            // msgInBlacklist.s(plr, EnumChatFormatting.DARK_RED.toString());
-            // return;
-            // }
-            // if (!prop.timer.checkTimeIfValid(plr.worldObj.getTotalWorldTime(), Settings.commentInterval, false))
-            // {
-            // msgTooFastToComment.s(plr, EnumChatFormatting.DARK_RED.toString());
-            // return;
-            // }
-            // DataInputStream dis = null;
-            // try
-            // {
-            // dis = new DataInputStream(new ByteArrayInputStream(packet.data));
-            // int mode = dis.readShort();
-            // int lifespan = dis.readShort();
-            // String text = dis.readUTF().trim().replace("&", "\u00a7").replace("\u00a7\u00a7", "&");
-            // if (!Settings.isModeAllowed(mode) || lifespan < Settings.minLifespan || lifespan > Settings.maxLifespan || StringUtils.stripControlCodes(text).isEmpty())
-            // {
-            // msgInvalidArguments.s(plr, EnumChatFormatting.DARK_RED.toString());
-            // return;
-            // }
-            // if (BilicraftComments.manager != null)
-            // {
-            // if (!BilicraftComments.manager.hasPermission(plr.username, "BcC.commentMode." + mode))
-            // {
-            // msgInvalidArguments.s(plr, EnumChatFormatting.DARK_RED.toString());
-            // return;
-            // }
-            // if (!BilicraftComments.manager.hasPermission(plr.username, "BcC.colorComments"))
-            // text = StringUtils.stripControlCodes(text);
-            // }
-            // BilicraftComments.logger.log(LevelComment.comment, String.format("[username:%s] [mode:%d] [lifespan:%d] %s", plr.username, mode, lifespan, text));
-            // prop.timer.markTime(plr.worldObj.getTotalWorldTime());
-            // packet = BilicraftComments.createDisplayPacket(mode, lifespan, EnumChatFormatting.RESET + plr.getTranslatedEntityName() + " > " + text);
-            // for (Object o : FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().playerEntityList)
-            // {
-            // if (o instanceof EntityPlayerMP)
-            // ((EntityPlayerMP) o).playerNetServerHandler.sendPacketToPlayer(packet);
-            // }
-            // }
-            // catch (IOException e)
-            // {
-            // System.err.println("error reading incoming comment request: " + e.toString());
-            // }
-            // finally
-            // {
-            // if (dis != null)
-            // try
-            // {
-            // dis.close();
-            // }
-            // catch (IOException ignored)
-            // {
-            // }
-            // }
         }
     }
 
@@ -183,6 +108,7 @@ public class CommonProxy
         Whitelist.load();
         Blacklist.load();
         ExtendedPlayerProperties.load();
+        PacketHandler.load();
     }
 
     public void registerCommands(ICommandManager manager)

@@ -67,7 +67,7 @@ public class Blacklist
         catch (Exception e)
         {
             instance = backup;
-            BilicraftComments.logger.warning("error loading comment blacklist: " + e.toString());
+            BilicraftComments.logger.warn("error loading comment blacklist", e);
         }
         finally
         {
@@ -121,7 +121,7 @@ public class Blacklist
             }
             catch (Exception e)
             {
-                BilicraftComments.logger.warning("error saving comment blacklist: " + e.toString());
+                BilicraftComments.logger.warn("error saving comment blacklist", e);
             }
             finally
             {

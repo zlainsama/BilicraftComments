@@ -48,4 +48,43 @@ public class SimpleLanguageFileLoader
         load(location.openStream(), lang);
     }
 
+    public static boolean loadSafe(InputStream datastream, String lang)
+    {
+        try
+        {
+            load(datastream, lang);
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public static boolean loadSafe(String location, String lang)
+    {
+        try
+        {
+            load(SimpleLanguageFileLoader.class.getResource(location), lang);
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public static boolean loadSafe(URL location, String lang)
+    {
+        try
+        {
+            load(location.openStream(), lang);
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
 }

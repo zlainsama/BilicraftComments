@@ -66,7 +66,7 @@ public class Settings
             maxLifespan = b_maxLifespan;
             commentInterval = b_commentInterval;
             whitelistMode = b_whitelistMode;
-            BilicraftComments.logger.warning("error loading config: " + e.toString());
+            BilicraftComments.logger.warn("error loading config", e);
         }
     }
 
