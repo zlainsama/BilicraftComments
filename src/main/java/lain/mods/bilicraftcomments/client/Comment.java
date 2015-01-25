@@ -56,10 +56,9 @@ public class Comment
     public static Minecraft client = null;
     public static FontRenderer renderer = null;
     public static ScaledResolution res = null;
+
     public static int width = 320;
-
     public static int height = 240;
-
     public static int numSlots = 18;
 
     public final int mode;
