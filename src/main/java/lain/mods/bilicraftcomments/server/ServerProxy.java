@@ -6,6 +6,7 @@ import io.netty.buffer.Unpooled;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.logging.FileHandler;
@@ -63,6 +64,18 @@ public class ServerProxy
         {
             whitelist.loadFile(new File(BilicraftCommentsServer.rootDir, "BcC_Whitelist.json"));
         }
+        catch (FileNotFoundException e)
+        {
+            try
+            {
+                whitelist.saveFile(whitelist.currentFile);
+            }
+            catch (IOException e1)
+            {
+                BilicraftCommentsServer.logger.fatal("error creating default whitelist file: " + e1.toString());
+                throw new RuntimeException(e1);
+            }
+        }
         catch (Exception e)
         {
             BilicraftCommentsServer.logger.fatal("error loading whitelist file: " + e.toString());
@@ -71,6 +84,18 @@ public class ServerProxy
         try
         {
             blacklist.loadFile(new File(BilicraftCommentsServer.rootDir, "BcC_Blacklist.json"));
+        }
+        catch (FileNotFoundException e)
+        {
+            try
+            {
+                blacklist.saveFile(blacklist.currentFile);
+            }
+            catch (IOException e1)
+            {
+                BilicraftCommentsServer.logger.fatal("error creating default blacklist file: " + e1.toString());
+                throw new RuntimeException(e1);
+            }
         }
         catch (Exception e)
         {
