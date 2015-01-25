@@ -16,3 +16,5 @@ BcC_Blacklist_Added = 已添加 '%1$s' 到弹幕黑名单.
 BcC_Blacklist_Removed = 已将 '%1$s' 从弹幕黑名单中移除.
 BcC_NoPermission = 你没有权限这么做.
 BcC_Reloaded = 配置与玩家列表重新加载完毕.
+
+key.openCommentGui = 打开弹幕发送窗口

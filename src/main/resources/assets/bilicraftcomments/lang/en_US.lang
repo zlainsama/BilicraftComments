@@ -16,3 +16,5 @@ BcC_Blacklist_Added = '%1$s' added to comment blacklist.
 BcC_Blacklist_Removed = '%1$s' removed from comment blacklist.
 BcC_NoPermission = You do not have permission to do that.
 BcC_Reloaded = Reloaded config and player lists.
+
+key.openCommentGui = Open Comment Gui
