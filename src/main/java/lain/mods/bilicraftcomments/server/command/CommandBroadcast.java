@@ -41,7 +41,7 @@ public class CommandBroadcast extends CommandBase
             EntityPlayerMP[] players = PlayerSelector.matchPlayers(arg0, arg1[0]);
             if (players == null)
             {
-                players = new EntityPlayerMP[] { FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().getPlayerForUsername(arg1[0]) };
+                players = new EntityPlayerMP[] { FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().func_152612_a(arg1[0]) };
                 if (players[0] == null)
                     throw new PlayerNotFoundException();
             }
