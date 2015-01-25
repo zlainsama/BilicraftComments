@@ -11,19 +11,20 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import lain.mods.bilicraftcomments.BilicraftCommentsClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.common.network.FMLEventChannel;
-import cpw.mods.fml.common.network.FMLNetworkEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.internal.FMLProxyPacket;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.network.FMLEventChannel;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 
 public class ClientProxy
 {
@@ -59,7 +60,7 @@ public class ClientProxy
     @SubscribeEvent
     public void inputHook(InputEvent.KeyInputEvent event)
     {
-        if (keyOpenCommentGui.getIsKeyPressed())
+        if (keyOpenCommentGui.isKeyDown())
         {
             Minecraft client = FMLClientHandler.instance().getClient();
             if (client != null && client.currentScreen == null)
@@ -140,7 +141,7 @@ public class ClientProxy
             dos.writeInt(lifespan);
             dos.writeUTF(s);
             dos.close();
-            channel.sendToServer(new FMLProxyPacket(bbos.buffer(), TARGET));
+            channel.sendToServer(new FMLProxyPacket(new PacketBuffer(bbos.buffer()), TARGET));
         }
         catch (Exception e)
         {

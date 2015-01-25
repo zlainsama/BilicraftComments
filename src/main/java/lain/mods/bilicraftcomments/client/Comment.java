@@ -4,10 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ChatComponentText;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class Comment
@@ -46,7 +46,7 @@ public class Comment
     public static void prepare()
     {
         client = FMLClientHandler.instance().getClient();
-        renderer = client.fontRenderer;
+        renderer = client.fontRendererObj;
         res = new ScaledResolution(client, client.displayWidth, client.displayHeight);
         width = res.getScaledWidth();
         height = res.getScaledHeight();

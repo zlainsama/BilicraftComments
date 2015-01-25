@@ -3,10 +3,10 @@ package lain.mods.bilicraftcomments;
 import java.io.File;
 import lain.mods.bilicraftcomments.server.ServerConfigs;
 import lain.mods.bilicraftcomments.server.ServerProxy;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Logger;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
 @Mod(modid = "BilicraftComments", useMetadata = true)
 public class BilicraftCommentsServer

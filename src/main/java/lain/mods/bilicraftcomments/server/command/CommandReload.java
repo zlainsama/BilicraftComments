@@ -6,6 +6,7 @@ import lain.mods.bilicraftcomments.server.Messenger.Message;
 import lain.mods.bilicraftcomments.server.ServerConfigs;
 import lain.mods.bilicraftcomments.server.ServerProxy;
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.EnumChatFormatting;
 
@@ -13,25 +14,7 @@ public class CommandReload extends CommandBase
 {
 
     @Override
-    public String getCommandName()
-    {
-        return "bcc_reload";
-    }
-
-    @Override
-    public String getCommandUsage(ICommandSender arg0)
-    {
-        return null;
-    }
-
-    @Override
-    public int getRequiredPermissionLevel()
-    {
-        return 3;
-    }
-
-    @Override
-    public void processCommand(ICommandSender arg0, String[] arg1)
+    public void execute(ICommandSender arg0, String[] arg1) throws CommandException
     {
         ServerConfigs.reload();
         try
@@ -53,6 +36,24 @@ public class CommandReload extends CommandBase
             throw new RuntimeException(e);
         }
         Messenger.sendWithColor(arg0, Message.msgReloaded, EnumChatFormatting.DARK_RED);
+    }
+
+    @Override
+    public String getCommandUsage(ICommandSender arg0)
+    {
+        return null;
+    }
+
+    @Override
+    public String getName()
+    {
+        return "bcc_reload";
+    }
+
+    @Override
+    public int getRequiredPermissionLevel()
+    {
+        return 3;
     }
 
 }
