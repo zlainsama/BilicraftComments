@@ -53,10 +53,10 @@ public class CommandWhitelistAdd extends CommandBase
                 BilicraftCommentsServer.logger.fatal("error saving whitelist file: " + e.toString());
                 throw new RuntimeException(e);
             }
-            Messenger.send(arg0, Message.msgWhitelistAdded, EnumChatFormatting.DARK_RED, arg1[0]);
+            Messenger.sendWithColor(arg0, Message.msgWhitelistAdded, EnumChatFormatting.DARK_RED, arg1[0]);
         }
         else
-            Messenger.send(arg0, Message.msgWhitelistUsageAdd, EnumChatFormatting.DARK_RED);
+            Messenger.sendWithColor(arg0, Message.msgWhitelistUsageAdd, EnumChatFormatting.DARK_RED);
     }
 
 }

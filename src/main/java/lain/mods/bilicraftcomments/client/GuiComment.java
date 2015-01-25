@@ -17,28 +17,28 @@ public class GuiComment extends GuiScreen
 
     public static enum ControlCodeArea
     {
-        c0("&0", 11, 12, 16, 16), // 0 - BLACK
-        c1("&1", 26, 12, 16, 16), // 1 - DARK_BLUE
-        c2("&2", 41, 12, 16, 16), // 2 - DARK_GREEN
-        c3("&3", 56, 12, 16, 16), // 3 - DARK_AQUA
-        c4("&4", 71, 12, 16, 16), // 4 - DARK_RED
-        c5("&5", 86, 12, 16, 16), // 5 - DARK_PURPLE
-        c6("&6", 101, 12, 16, 16), // 6 - GOLD
-        c7("&7", 116, 12, 16, 16), // 7 - GRAY
-        c8("&8", 11, 27, 16, 16), // 8 - DARK_GRAY
-        c9("&9", 26, 27, 16, 16), // 9 - BLUE
-        ca("&a", 41, 27, 16, 16), // a - GREEN
-        cb("&b", 56, 27, 16, 16), // b - AQUA
-        cc("&c", 71, 27, 16, 16), // c - RED
-        cd("&d", 86, 27, 16, 16), // d - LIGHT_PURPLE
-        ce("&e", 101, 27, 16, 16), // e - YELLOW
-        cf("&f", 116, 27, 16, 16), // f - WHITE
+        c0("\u00a70", 11, 12, 16, 16), // 0 - BLACK
+        c1("\u00a71", 26, 12, 16, 16), // 1 - DARK_BLUE
+        c2("\u00a72", 41, 12, 16, 16), // 2 - DARK_GREEN
+        c3("\u00a73", 56, 12, 16, 16), // 3 - DARK_AQUA
+        c4("\u00a74", 71, 12, 16, 16), // 4 - DARK_RED
+        c5("\u00a75", 86, 12, 16, 16), // 5 - DARK_PURPLE
+        c6("\u00a76", 101, 12, 16, 16), // 6 - GOLD
+        c7("\u00a77", 116, 12, 16, 16), // 7 - GRAY
+        c8("\u00a78", 11, 27, 16, 16), // 8 - DARK_GRAY
+        c9("\u00a79", 26, 27, 16, 16), // 9 - BLUE
+        ca("\u00a7a", 41, 27, 16, 16), // a - GREEN
+        cb("\u00a7b", 56, 27, 16, 16), // b - AQUA
+        cc("\u00a7c", 71, 27, 16, 16), // c - RED
+        cd("\u00a7d", 86, 27, 16, 16), // d - LIGHT_PURPLE
+        ce("\u00a7e", 101, 27, 16, 16), // e - YELLOW
+        cf("\u00a7f", 116, 27, 16, 16), // f - WHITE
         // ck
-        cl("&l", 136, 22, 20, 21), // l - BOLD
-        cm("&m", 202, 22, 20, 20), // m - STRIKETHROUGH
-        cn("&n", 183, 23, 15, 18), // n - UNDERLINE
-        co("&o", 160, 22, 19, 20), // o - ITALIC
-        cr("&r", 225, 21, 21, 22); // r - RESET
+        cl("\u00a7l", 136, 22, 20, 21), // l - BOLD
+        cm("\u00a7m", 202, 22, 20, 20), // m - STRIKETHROUGH
+        cn("\u00a7n", 183, 23, 15, 18), // n - UNDERLINE
+        co("\u00a7o", 160, 22, 19, 20), // o - ITALIC
+        cr("\u00a7r", 225, 21, 21, 22); // r - RESET
 
         public final String code;
         public final Rect rect;

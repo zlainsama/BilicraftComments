@@ -53,10 +53,10 @@ public class CommandBlacklistRemove extends CommandBase
                 BilicraftCommentsServer.logger.fatal("error saving blacklist file: " + e.toString());
                 throw new RuntimeException(e);
             }
-            Messenger.send(arg0, Message.msgBlacklistRemoved, EnumChatFormatting.DARK_RED, arg1[0]);
+            Messenger.sendWithColor(arg0, Message.msgBlacklistRemoved, EnumChatFormatting.DARK_RED, arg1[0]);
         }
         else
-            Messenger.send(arg0, Message.msgBlacklistUsageRemove, EnumChatFormatting.DARK_RED);
+            Messenger.sendWithColor(arg0, Message.msgBlacklistUsageRemove, EnumChatFormatting.DARK_RED);
     }
 
 }

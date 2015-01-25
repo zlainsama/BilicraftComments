@@ -167,17 +167,17 @@ public class ServerProxy
             EntityPlayerMP sender = ((NetHandlerPlayServer) event.handler).playerEntity;
             if (ServerConfigs.whitelistMode && !whitelist.contains(sender))
             {
-                Messenger.send(sender, Message.msgNotInWhitelist, EnumChatFormatting.DARK_RED);
+                Messenger.sendWithColor(sender, Message.msgNotInWhitelist, EnumChatFormatting.DARK_RED);
                 return;
             }
             if (blacklist.contains(sender))
             {
-                Messenger.send(sender, Message.msgInBlacklist, EnumChatFormatting.DARK_RED);
+                Messenger.sendWithColor(sender, Message.msgInBlacklist, EnumChatFormatting.DARK_RED);
                 return;
             }
             if (!marker.checkTimeIfValid(sender, sender.worldObj.getTotalWorldTime(), ServerConfigs.commentInterval, false))
             {
-                Messenger.send(sender, Message.msgTooFastToComment, EnumChatFormatting.DARK_RED);
+                Messenger.sendWithColor(sender, Message.msgTooFastToComment, EnumChatFormatting.DARK_RED);
                 return;
             }
             dis = new DataInputStream(new ByteBufInputStream(event.packet.payload()));
@@ -186,12 +186,12 @@ public class ServerProxy
             String text = dis.readUTF().replace("&", "\u00a7").replace("\u00a7\u00a7", "&");
             if (!ServerConfigs.isModeAllowed(mode) || lifespan < ServerConfigs.minLifespan || lifespan > ServerConfigs.maxLifespan || StringUtils.stripControlCodes(text).isEmpty())
             {
-                Messenger.send(sender, Message.msgInvalidArguments, EnumChatFormatting.DARK_RED);
+                Messenger.sendWithColor(sender, Message.msgInvalidArguments, EnumChatFormatting.DARK_RED);
                 return;
             }
             chatLogger.info(String.format("[uuid:%s] [username:%s] [mode:%d] [lifespan:%d] %s", sender.getUniqueID().toString(), StringUtils.stripControlCodes(sender.getCommandSenderName()), mode, lifespan, text));
             marker.markTime(sender, sender.worldObj.getTotalWorldTime());
-            FMLProxyPacket packet = createDisplayRequest(mode, lifespan, text);
+            FMLProxyPacket packet = createDisplayRequest(mode, lifespan, ServerConfigs.appendUsername ? StringUtils.stripControlCodes(sender.getCommandSenderName()) + ": " + text : text);
             channel.sendToAll(packet);
         }
         catch (IOException e)

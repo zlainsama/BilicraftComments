@@ -49,6 +49,7 @@ public class ServerConfigs
         maxLifespan = config.get(Configuration.CATEGORY_GENERAL, "maxLifespan", 400).getInt(400);
         commentInterval = config.get(Configuration.CATEGORY_GENERAL, "commentInterval", 100).getInt(100);
         whitelistMode = config.get(Configuration.CATEGORY_GENERAL, "whitelistMode", true).getBoolean(true);
+        appendUsername = config.get(Configuration.CATEGORY_GENERAL, "appendUsername", true).getBoolean(true);
         allowLANServer = config.get(Configuration.CATEGORY_GENERAL, "allowLANServer", false).getBoolean(false);
 
         if (config.hasChanged())
@@ -62,6 +63,7 @@ public class ServerConfigs
     public static int maxLifespan = 400;
     public static int commentInterval = 100;
     public static boolean whitelistMode = true;
+    public static boolean appendUsername = true;
     public static boolean allowLANServer = false;
 
     private static Set<Integer> sModes = Sets.newHashSet();
