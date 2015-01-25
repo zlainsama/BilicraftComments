@@ -44,7 +44,7 @@ public class ServerConfigs
 
     protected static void sync()
     {
-        allowedMode = config.get(Configuration.CATEGORY_GENERAL, "allowedMode", "0;1;2").comment;
+        allowedMode = config.get(Configuration.CATEGORY_GENERAL, "allowedMode", "0;1;2").getString();
         minLifespan = config.get(Configuration.CATEGORY_GENERAL, "minLifespan", 40).getInt(40);
         maxLifespan = config.get(Configuration.CATEGORY_GENERAL, "maxLifespan", 400).getInt(400);
         commentInterval = config.get(Configuration.CATEGORY_GENERAL, "commentInterval", 100).getInt(100);
