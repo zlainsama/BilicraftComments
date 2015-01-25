@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.x-v1"
+version = "1.7.2-v1"
 group= "lain.mods.bilicraftcomments"
 archivesBaseName = "BilicraftComments"
 
