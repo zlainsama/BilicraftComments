@@ -50,6 +50,9 @@ public class ServerConfigs
         commentInterval = config.get(Configuration.CATEGORY_GENERAL, "commentInterval", 100).getInt(100);
         whitelistMode = config.get(Configuration.CATEGORY_GENERAL, "whitelistMode", true).getBoolean(true);
         allowLANServer = config.get(Configuration.CATEGORY_GENERAL, "allowLANServer", false).getBoolean(false);
+
+        if (config.hasChanged())
+            config.save();
     }
 
     private static Configuration config;
