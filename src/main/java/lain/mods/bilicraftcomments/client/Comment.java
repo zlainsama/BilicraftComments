@@ -47,7 +47,7 @@ public class Comment
     {
         client = FMLClientHandler.instance().getClient();
         renderer = client.fontRenderer;
-        res = new ScaledResolution(client.gameSettings, client.displayWidth, client.displayHeight);
+        res = new ScaledResolution(client, client.displayWidth, client.displayHeight);
         width = res.getScaledWidth();
         height = res.getScaledHeight();
         numSlots = (int) ((float) (height - 60) / (float) (renderer.FONT_HEIGHT + 1));
