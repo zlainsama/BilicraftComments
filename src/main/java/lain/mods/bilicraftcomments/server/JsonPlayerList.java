@@ -44,6 +44,7 @@ public class JsonPlayerList
 
     private final Gson gson;
 
+    public File currentFile;
     protected Set<String> list = new HashSet<String>();
 
     public JsonPlayerList()
@@ -100,6 +101,7 @@ public class JsonPlayerList
                 catch (IOException ignored)
                 {
                 }
+            currentFile = file;
         }
     }
 

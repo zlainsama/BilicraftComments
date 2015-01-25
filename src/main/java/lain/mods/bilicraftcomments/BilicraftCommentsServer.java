@@ -1,5 +1,6 @@
 package lain.mods.bilicraftcomments;
 
+import java.io.File;
 import lain.mods.bilicraftcomments.server.ServerConfigs;
 import lain.mods.bilicraftcomments.server.ServerProxy;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +13,7 @@ public class BilicraftCommentsServer
 {
 
     public static Logger logger;
+    public static File rootDir;
 
     @Mod.EventHandler
     public void init(FMLPreInitializationEvent event)
@@ -21,6 +23,7 @@ public class BilicraftCommentsServer
             return;
 
         logger = event.getModLog();
+        rootDir = event.getModConfigurationDirectory().getParentFile();
 
         ServerProxy.setup();
     }

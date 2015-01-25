@@ -233,7 +233,10 @@ public class GuiComment extends GuiScreen
         }
         else if (par2 == 28 || par2 == 156)
         {
-            String s = inputField.getText().trim().replace("\u00a7", "&");
+            // String s = inputField.getText().trim().replace("\u00a7", "&");
+            // if (s.length() > 0)
+            // ClientProxy.INSTANCE.sendRequest(mode, lifespan, s);
+            String s = inputField.getText().trim();
             if (s.length() > 0)
                 ClientProxy.INSTANCE.sendRequest(mode, lifespan, s);
             mc.displayGuiScreen(null);

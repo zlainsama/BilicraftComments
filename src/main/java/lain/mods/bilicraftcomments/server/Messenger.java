@@ -23,7 +23,9 @@ public class Messenger
         msgBlacklistUsageAdd("BcC_Blacklist_Usage_Add"),
         msgBlacklistUsageRemove("BcC_Blacklist_Usage_Remove"),
         msgBlacklistAdded("BcC_Blacklist_Added"),
-        msgBlacklistRemoved("BcC_Blacklist_Removed");
+        msgBlacklistRemoved("BcC_Blacklist_Removed"),
+        msgNoPermission("BcC_NoPermission"),
+        msgReloaded("BcC_Reloaded");
 
         public final String key;
 
