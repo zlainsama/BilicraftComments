@@ -11,7 +11,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.1-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
 
@@ -22,11 +22,15 @@ group= "lain.mods.bilicraftcomments"
 archivesBaseName = "BilicraftComments"
 
 minecraft {
-    version = "1.7.2-10.12.0.1002"
+    version = "1.7.2-10.12.2.1121"
+    assetDir = "eclipse/assets"
 }
 
 processResources
 {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
     from(sourceSets.main.resources.srcDirs)
     {
         include 'mcmod.info'
