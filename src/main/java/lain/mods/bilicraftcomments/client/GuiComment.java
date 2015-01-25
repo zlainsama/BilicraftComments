@@ -1,15 +1,17 @@
 package lain.mods.bilicraftcomments.client;
 
+import java.io.IOException;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiComment extends GuiScreen
@@ -117,12 +119,13 @@ public class GuiComment extends GuiScreen
 
     public static void drawRectTexture(int x, int y, int w, int h, int u, int v, float zLevel)
     {
-        Tessellator a = Tessellator.instance;
-        a.startDrawingQuads();
-        a.addVertexWithUV((double) (x + 0), (double) (y + h), (double) zLevel, (double) ((float) (u + 0) * fW), (double) ((float) (v + h) * fH));
-        a.addVertexWithUV((double) (x + w), (double) (y + h), (double) zLevel, (double) ((float) (u + w) * fW), (double) ((float) (v + h) * fH));
-        a.addVertexWithUV((double) (x + w), (double) (y + 0), (double) zLevel, (double) ((float) (u + w) * fW), (double) ((float) (v + 0) * fH));
-        a.addVertexWithUV((double) (x + 0), (double) (y + 0), (double) zLevel, (double) ((float) (u + 0) * fW), (double) ((float) (v + 0) * fH));
+        Tessellator a = Tessellator.getInstance();
+        WorldRenderer b = a.getWorldRenderer();
+        b.startDrawingQuads();
+        b.addVertexWithUV((double) (x + 0), (double) (y + h), (double) zLevel, (double) ((float) (u + 0) * fW), (double) ((float) (v + h) * fH));
+        b.addVertexWithUV((double) (x + w), (double) (y + h), (double) zLevel, (double) ((float) (u + w) * fW), (double) ((float) (v + h) * fH));
+        b.addVertexWithUV((double) (x + w), (double) (y + 0), (double) zLevel, (double) ((float) (u + w) * fW), (double) ((float) (v + 0) * fH));
+        b.addVertexWithUV((double) (x + 0), (double) (y + 0), (double) zLevel, (double) ((float) (u + 0) * fW), (double) ((float) (v + 0) * fH));
         a.draw();
     }
 
@@ -191,12 +194,12 @@ public class GuiComment extends GuiScreen
                     break;
                 }
             }
-            drawString(mc.fontRenderer, String.format("%.1f", (float) lifespan / 20F), areaSettings.x + 33, areaSettings.y + 105, 0xFFFFFF);
+            drawString(mc.fontRendererObj, String.format("%.1f", (float) lifespan / 20F), areaSettings.x + 33, areaSettings.y + 105, 0xFFFFFF);
         }
         super.drawScreen(par1, par2, par3);
     }
 
-    public void handleMouseInput()
+    public void handleMouseInput() throws IOException
     {
         super.handleMouseInput();
         int i = Mouse.getEventDWheel();
@@ -215,7 +218,7 @@ public class GuiComment extends GuiScreen
     public void initGui()
     {
         Keyboard.enableRepeatEvents(true);
-        inputField = new GuiTextField(fontRendererObj, 4, height - 12, width - 4, 12);
+        inputField = new GuiTextField(0, fontRendererObj, 4, height - 12, width - 4, 12);
         inputField.setMaxStringLength(100);
         inputField.setEnableBackgroundDrawing(false);
         inputField.setFocused(true);
@@ -243,11 +246,11 @@ public class GuiComment extends GuiScreen
         }
         else if (par2 == 201)
         {
-            mc.ingameGUI.getChatGUI().scroll(mc.ingameGUI.getChatGUI().func_146232_i() - 1);
+            mc.ingameGUI.getChatGUI().scroll(mc.ingameGUI.getChatGUI().getLineCount() - 1);
         }
         else if (par2 == 209)
         {
-            mc.ingameGUI.getChatGUI().scroll(-mc.ingameGUI.getChatGUI().func_146232_i() + 1);
+            mc.ingameGUI.getChatGUI().scroll(-mc.ingameGUI.getChatGUI().getLineCount() + 1);
         }
         else
         {
@@ -255,13 +258,13 @@ public class GuiComment extends GuiScreen
         }
     }
 
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(int par1, int par2, int par3) throws IOException
     {
         inputField.mouseClicked(par1, par2, par3);
         if (areaSettingsButton.isMouseHovering(par1, par2))
         {
             settingsOpened = !settingsOpened;
-            mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+            mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
         }
         if (settingsOpened)
         {

@@ -1,52 +1,32 @@
 package lain.mods.bilicraftcomments.server.command;
 
+import java.util.List;
 import lain.mods.bilicraftcomments.server.Messenger;
 import lain.mods.bilicraftcomments.server.Messenger.Message;
 import lain.mods.bilicraftcomments.server.ServerProxy;
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.PlayerNotFoundException;
 import net.minecraft.command.PlayerSelector;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumChatFormatting;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.internal.FMLProxyPacket;
+import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 
 public class CommandBroadcast extends CommandBase
 {
 
     @Override
-    public String getCommandName()
-    {
-        return "bcc_broadcast";
-    }
-
-    @Override
-    public String getCommandUsage(ICommandSender arg0)
-    {
-        return null;
-    }
-
-    @Override
-    public int getRequiredPermissionLevel()
-    {
-        return 2;
-    }
-
-    @Override
-    public void processCommand(ICommandSender arg0, String[] arg1)
+    public void execute(ICommandSender arg0, String[] arg1) throws CommandException
     {
         if (arg1.length >= 4)
         {
-            EntityPlayerMP[] players = PlayerSelector.matchPlayers(arg0, arg1[0]);
-            if (players == null)
-            {
-                players = new EntityPlayerMP[] { FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().func_152612_a(arg1[0]) };
-                if (players[0] == null)
-                    throw new PlayerNotFoundException();
-            }
-            int mode = parseIntBounded(arg0, arg1[1], 0, 3);
-            int lifespan = parseIntWithMin(arg0, arg1[2], -1);
+            @SuppressWarnings("unchecked")
+            List<EntityPlayerMP> players = PlayerSelector.matchEntities(arg0, arg1[0], EntityPlayerMP.class);
+            if (players.isEmpty())
+                throw new PlayerNotFoundException();
+            int mode = parseInt(arg1[1], 0, 3);
+            int lifespan = parseInt(arg1[2], -1);
             StringBuilder buf = new StringBuilder();
             for (int i = 3; i < arg1.length; i++)
             {
@@ -63,6 +43,24 @@ public class CommandBroadcast extends CommandBase
         {
             Messenger.sendWithColor(arg0, Message.msgBroadcastUsage, EnumChatFormatting.DARK_RED);
         }
+    }
+
+    @Override
+    public String getCommandUsage(ICommandSender arg0)
+    {
+        return null;
+    }
+
+    @Override
+    public String getName()
+    {
+        return "bcc_broadcast";
+    }
+
+    @Override
+    public int getRequiredPermissionLevel()
+    {
+        return 2;
     }
 
 }

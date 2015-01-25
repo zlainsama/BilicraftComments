@@ -1,9 +1,9 @@
 package lain.mods.bilicraftcomments;
 
 import lain.mods.bilicraftcomments.client.ClientProxy;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = "BilicraftComments|Client", useMetadata = true)
 public class BilicraftCommentsClient

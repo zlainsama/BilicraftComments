@@ -24,14 +24,15 @@ import lain.mods.bilicraftcomments.server.command.CommandWhitelistAdd;
 import lain.mods.bilicraftcomments.server.command.CommandWhitelistRemove;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.NetHandlerPlayServer;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.network.FMLEventChannel;
-import cpw.mods.fml.common.network.FMLNetworkEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.internal.FMLProxyPacket;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.FMLEventChannel;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 
 public class ServerProxy
 {
@@ -149,7 +150,7 @@ public class ServerProxy
             dos.writeInt(lifespan);
             dos.writeUTF(s);
             dos.close();
-            return new FMLProxyPacket(bbos.buffer(), TARGET);
+            return new FMLProxyPacket(new PacketBuffer(bbos.buffer()), TARGET);
         }
         catch (Exception e)
         {
@@ -189,9 +190,9 @@ public class ServerProxy
                 Messenger.sendWithColor(sender, Message.msgInvalidArguments, EnumChatFormatting.DARK_RED);
                 return;
             }
-            chatLogger.info(String.format("[uuid:%s] [username:%s] [mode:%d] [lifespan:%d] %s", sender.getUniqueID().toString(), StringUtils.stripControlCodes(sender.getCommandSenderName()), mode, lifespan, text));
+            chatLogger.info(String.format("[uuid:%s] [username:%s] [mode:%d] [lifespan:%d] %s", sender.getUniqueID().toString(), StringUtils.stripControlCodes(sender.getName()), mode, lifespan, text));
             marker.markTime(sender, sender.worldObj.getTotalWorldTime());
-            FMLProxyPacket packet = createDisplayRequest(mode, lifespan, ServerConfigs.appendUsername ? StringUtils.stripControlCodes(sender.getCommandSenderName()) + ": " + text : text);
+            FMLProxyPacket packet = createDisplayRequest(mode, lifespan, ServerConfigs.appendUsername ? StringUtils.stripControlCodes(sender.getName()) + ": " + text : text);
             channel.sendToAll(packet);
         }
         catch (IOException e)

@@ -60,7 +60,7 @@ public class JsonPlayerList
     public void add(EntityPlayer player)
     {
         list.add(player.getUniqueID().toString());
-        list.add(StringUtils.stripControlCodes(player.getCommandSenderName()));
+        list.add(StringUtils.stripControlCodes(player.getName()));
     }
 
     public void add(String string)
@@ -75,7 +75,7 @@ public class JsonPlayerList
 
     public boolean contains(EntityPlayer player)
     {
-        return list.contains(player.getUniqueID().toString()) || list.contains(StringUtils.stripControlCodes(player.getCommandSenderName()));
+        return list.contains(player.getUniqueID().toString()) || list.contains(StringUtils.stripControlCodes(player.getName()));
     }
 
     public boolean contains(String string)
@@ -108,7 +108,7 @@ public class JsonPlayerList
     public void remove(EntityPlayer player)
     {
         list.remove(player.getUniqueID().toString());
-        list.remove(StringUtils.stripControlCodes(player.getCommandSenderName()));
+        list.remove(StringUtils.stripControlCodes(player.getName()));
     }
 
     public void remove(String string)
