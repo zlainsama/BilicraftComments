@@ -9,15 +9,15 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Set;
 import java.util.TreeSet;
-import lain.mods.bilicraftcomments.BilicraftComments;
+import lain.mods.bilicraftcomments.BilicraftCommentsClient;
 import lain.mods.bilicraftcomments.io.UnicodeInputStreamReader;
 import net.minecraft.util.StringUtils;
 import com.google.common.collect.Sets;
 
-public class Blacklist
+public class Whitelist
 {
 
-    private static Blacklist instance;
+    private static Whitelist instance;
 
     public static void add(String username)
     {
@@ -34,7 +34,7 @@ public class Blacklist
 
     public static void load()
     {
-        File f = new File(BilicraftComments.rootDir, "BcC_Blacklist.txt");
+        File f = new File(BilicraftCommentsClient.rootDir, "BcC_Whitelist.txt");
         if (!f.exists())
             try
             {
@@ -44,16 +44,16 @@ public class Blacklist
             {
                 e.printStackTrace();
             }
-        Blacklist.load(f);
+        Whitelist.load(f);
     }
 
     public static void load(File file)
     {
         BufferedReader buf = null;
-        Blacklist backup = instance;
+        Whitelist backup = instance;
         try
         {
-            instance = new Blacklist();
+            instance = new Whitelist();
             buf = new BufferedReader(new UnicodeInputStreamReader(new FileInputStream(file), "UTF-8"));
             String line = null;
             while ((line = buf.readLine()) != null)
@@ -67,7 +67,7 @@ public class Blacklist
         catch (Exception e)
         {
             instance = backup;
-            BilicraftComments.logger.warn("error loading comment blacklist", e);
+            BilicraftCommentsClient.logger.warn("error loading comment whitelist", e);
         }
         finally
         {
@@ -90,7 +90,7 @@ public class Blacklist
 
     public static void save()
     {
-        File f = new File(BilicraftComments.rootDir, "BcC_Blacklist.txt");
+        File f = new File(BilicraftCommentsClient.rootDir, "BcC_Whitelist.txt");
         if (!f.exists())
             try
             {
@@ -100,7 +100,7 @@ public class Blacklist
             {
                 e.printStackTrace();
             }
-        Blacklist.save(f);
+        Whitelist.save(f);
     }
 
     public static void save(File file)
@@ -121,7 +121,7 @@ public class Blacklist
             }
             catch (Exception e)
             {
-                BilicraftComments.logger.warn("error saving comment blacklist", e);
+                BilicraftCommentsClient.logger.warn("error saving comment whitelist", e);
             }
             finally
             {

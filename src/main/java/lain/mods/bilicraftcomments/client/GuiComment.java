@@ -1,6 +1,6 @@
 package lain.mods.bilicraftcomments.client;
 
-import lain.mods.bilicraftcomments.BilicraftComments;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.Tessellator;
@@ -115,13 +115,6 @@ public class GuiComment extends GuiScreen
         }
     }
 
-    public static final ResourceLocation resTexture = new ResourceLocation("bilicraftcomments", "gui/gui.png");
-
-    public static boolean settingsOpened = false;
-
-    public static int mode = 0;
-    public static int lifespan = 200;
-
     public static void drawRectTexture(int x, int y, int w, int h, int u, int v, float zLevel)
     {
         Tessellator a = Tessellator.instance;
@@ -132,6 +125,12 @@ public class GuiComment extends GuiScreen
         a.addVertexWithUV((double) (x + 0), (double) (y + 0), (double) zLevel, (double) ((float) (u + 0) * fW), (double) ((float) (v + 0) * fH));
         a.draw();
     }
+
+    public static final ResourceLocation resTexture = new ResourceLocation("bilicraftcomments", "gui/gui.png");
+
+    public static boolean settingsOpened = false;
+    public static int mode = 0;
+    public static int lifespan = 200;
 
     protected GuiTextField inputField;
     protected Rect areaSettingsButton;
@@ -216,7 +215,7 @@ public class GuiComment extends GuiScreen
     public void initGui()
     {
         Keyboard.enableRepeatEvents(true);
-        inputField = new GuiTextField(fontRenderer, 4, height - 12, width - 4, 12);
+        inputField = new GuiTextField(fontRendererObj, 4, height - 12, width - 4, 12);
         inputField.setMaxStringLength(100);
         inputField.setEnableBackgroundDrawing(false);
         inputField.setFocused(true);
@@ -232,21 +231,20 @@ public class GuiComment extends GuiScreen
         {
             mc.displayGuiScreen(null);
         }
-        else if (par2 == 28)
+        else if (par2 == 28 || par2 == 156)
         {
             String s = inputField.getText().trim().replace("\u00a7", "&");
             if (s.length() > 0)
-                mc.thePlayer.sendChatMessage(BilicraftComments.createRequestCommandLine(mode, lifespan, s));
-            // mc.thePlayer.sendQueue.addToSendQueue(BilicraftComments.createRequestPacket(mode, lifespan, s));
+                ClientProxy.INSTANCE.sendRequest(mode, lifespan, s);
             mc.displayGuiScreen(null);
         }
         else if (par2 == 201)
         {
-            mc.ingameGUI.getChatGUI().scroll(mc.ingameGUI.getChatGUI().func_96127_i() - 1);
+            mc.ingameGUI.getChatGUI().scroll(mc.ingameGUI.getChatGUI().func_146232_i() - 1);
         }
         else if (par2 == 209)
         {
-            mc.ingameGUI.getChatGUI().scroll(-mc.ingameGUI.getChatGUI().func_96127_i() + 1);
+            mc.ingameGUI.getChatGUI().scroll(-mc.ingameGUI.getChatGUI().func_146232_i() + 1);
         }
         else
         {
@@ -260,7 +258,7 @@ public class GuiComment extends GuiScreen
         if (areaSettingsButton.isMouseHovering(par1, par2))
         {
             settingsOpened = !settingsOpened;
-            mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
+            mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
         }
         if (settingsOpened)
         {
@@ -316,7 +314,6 @@ public class GuiComment extends GuiScreen
         int i = cursorPosition < selectionEnd ? cursorPosition : selectionEnd;
         int j = cursorPosition < selectionEnd ? selectionEnd : cursorPosition;
         int k = maxStringLength - text.length() - (i - selectionEnd);
-        boolean flag = false;
         if (text.length() > 0)
         {
             s1 = s1 + text.substring(0, i);

@@ -1,52 +1,87 @@
 package lain.mods.bilicraftcomments.client;
 
-import java.io.ByteArrayInputStream;
+import io.netty.buffer.ByteBufInputStream;
+import io.netty.buffer.ByteBufOutputStream;
+import io.netty.buffer.Unpooled;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import lain.mods.bilicraftcomments.BilicraftComments;
-import lain.mods.bilicraftcomments.common.CommonProxy;
+import lain.mods.bilicraftcomments.BilicraftCommentsClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.NetLoginHandler;
-import net.minecraft.network.packet.NetHandler;
-import net.minecraft.network.packet.Packet1Login;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.KeyBindingRegistry;
-import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
-import cpw.mods.fml.common.ITickHandler;
-import cpw.mods.fml.common.TickType;
-import cpw.mods.fml.common.network.IConnectionHandler;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
+import cpw.mods.fml.common.network.FMLEventChannel;
+import cpw.mods.fml.common.network.FMLNetworkEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.Player;
-import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 
-public class ClientProxy extends CommonProxy
+public class ClientProxy
 {
 
-    KeyBinding keyCommentGui = new KeyBinding("Open Comment Gui", 0x17);
-    List<Comment> comments = new CopyOnWriteArrayList();
-    long ticks = 0L;
+    public static void setup()
+    {
+        if (INSTANCE == null)
+            throw new RuntimeException();
+    }
 
-    @Override
-    public void displayComment(INetworkManager manager, Packet250CustomPayload packet, Player player)
+    public static final ClientProxy INSTANCE = new ClientProxy();
+
+    private static final String TARGET = "BcC|S";
+    private static final String LOCAL = "BcC|C";
+    private FMLEventChannel channel;
+
+    protected final List<Comment> comments = new CopyOnWriteArrayList<Comment>();
+    protected KeyBinding keyOpenCommentGui;
+    private long ticks = 0L;
+
+    private ClientProxy()
+    {
+        FMLCommonHandler.instance().bus().register(this);
+        MinecraftForge.EVENT_BUS.register(this);
+
+        keyOpenCommentGui = new KeyBinding("key.openCommentGui", 0x17, "key.categories.multiplayer");
+        ClientRegistry.registerKeyBinding(keyOpenCommentGui);
+
+        channel = NetworkRegistry.INSTANCE.newEventDrivenChannel(LOCAL);
+        channel.register(this);
+    }
+
+    @SubscribeEvent
+    public void inputHook(InputEvent.KeyInputEvent event)
+    {
+        if (keyOpenCommentGui.getIsKeyPressed())
+        {
+            Minecraft client = FMLClientHandler.instance().getClient();
+            if (client != null && client.currentScreen == null)
+                client.displayGuiScreen(new GuiComment());
+        }
+    }
+
+    @SubscribeEvent
+    public void networkHook(FMLNetworkEvent.ClientConnectedToServerEvent event)
+    {
+        comments.clear();
+    }
+
+    @SubscribeEvent
+    public void networkHook(FMLNetworkEvent.ClientCustomPacketEvent event)
     {
         DataInputStream dis = null;
         try
         {
-            dis = new DataInputStream(new ByteArrayInputStream(packet.data));
-            int mode = dis.readShort();
-            int lifespan = dis.readShort();
+            dis = new DataInputStream(new ByteBufInputStream(event.packet.payload()));
+            int mode = dis.readInt();
+            int lifespan = dis.readInt();
             String text = dis.readUTF();
             if (!StringUtils.stripControlCodes(text).isEmpty())
             {
@@ -57,7 +92,7 @@ public class ClientProxy extends CommonProxy
         }
         catch (IOException e)
         {
-            BilicraftComments.logger.warning("error reading incoming comment: " + e.toString());
+            BilicraftCommentsClient.logger.warn("error handling incoming comment: " + e.toString());
         }
         finally
         {
@@ -72,106 +107,10 @@ public class ClientProxy extends CommonProxy
         }
     }
 
-    @Override
-    public void load()
+    @SubscribeEvent
+    public void renderHook(RenderGameOverlayEvent.Post event)
     {
-        super.load();
-        MinecraftForge.EVENT_BUS.register(this);
-        TickRegistry.registerTickHandler(new ITickHandler()
-        {
-            @Override
-            public String getLabel()
-            {
-                return "TickCounter";
-            }
-
-            @Override
-            public void tickEnd(EnumSet<TickType> arg0, Object... arg1)
-            {
-                ticks = ticks + 1;
-            }
-
-            @Override
-            public EnumSet<TickType> ticks()
-            {
-                return EnumSet.of(TickType.CLIENT);
-            }
-
-            @Override
-            public void tickStart(EnumSet<TickType> arg0, Object... arg1)
-            {
-            }
-        }, Side.CLIENT);
-        NetworkRegistry.instance().registerConnectionHandler(new IConnectionHandler()
-        {
-            @Override
-            public void clientLoggedIn(NetHandler arg0, INetworkManager arg1, Packet1Login arg2)
-            {
-                comments.clear();
-            }
-
-            @Override
-            public void connectionClosed(INetworkManager arg0)
-            {
-            }
-
-            @Override
-            public void connectionOpened(NetHandler arg0, MinecraftServer arg1, INetworkManager arg2)
-            {
-            }
-
-            @Override
-            public void connectionOpened(NetHandler arg0, String arg1, int arg2, INetworkManager arg3)
-            {
-            }
-
-            @Override
-            public String connectionReceived(NetLoginHandler arg0, INetworkManager arg1)
-            {
-                return null;
-            }
-
-            @Override
-            public void playerLoggedIn(Player arg0, NetHandler arg1, INetworkManager arg2)
-            {
-            }
-        });
-        KeyBindingRegistry.registerKeyBinding(new KeyHandler(new KeyBinding[] { keyCommentGui }, new boolean[] { false })
-        {
-            @Override
-            public String getLabel()
-            {
-                return "KeyBinding";
-            }
-
-            @Override
-            public void keyDown(EnumSet<TickType> paramEnumSet, KeyBinding paramKeyBinding, boolean paramBoolean1, boolean paramBoolean2)
-            {
-                if (paramKeyBinding == keyCommentGui && paramBoolean1)
-                {
-                    Minecraft client = FMLClientHandler.instance().getClient();
-                    if (client != null && client.currentScreen == null)
-                        client.displayGuiScreen(new GuiComment());
-                }
-            }
-
-            @Override
-            public void keyUp(EnumSet<TickType> paramEnumSet, KeyBinding paramKeyBinding, boolean paramBoolean)
-            {
-            }
-
-            @Override
-            public EnumSet<TickType> ticks()
-            {
-                return EnumSet.of(TickType.CLIENT);
-            }
-        });
-    }
-
-    @ForgeSubscribe
-    public void onRenderOverlayPost(RenderGameOverlayEvent.Post event)
-    {
-        if (event.type == RenderGameOverlayEvent.ElementType.ALL) // PS: forge 721 doesn't send this, you need at least forge 722
+        if (event.type == RenderGameOverlayEvent.ElementType.ALL)
         {
             if (!comments.isEmpty())
             {
@@ -189,6 +128,31 @@ public class ClientProxy extends CommonProxy
                 }
             }
         }
+    }
+
+    public void sendRequest(int mode, int lifespan, String s)
+    {
+        try
+        {
+            ByteBufOutputStream bbos = new ByteBufOutputStream(Unpooled.buffer());
+            DataOutputStream dos = new DataOutputStream(bbos);
+            dos.writeInt(mode);
+            dos.writeInt(lifespan);
+            dos.writeUTF(s);
+            dos.close();
+            channel.sendToServer(new FMLProxyPacket(bbos.buffer(), TARGET));
+        }
+        catch (Exception e)
+        {
+            BilicraftCommentsClient.logger.fatal("error sending comment request: " + e.toString());
+        }
+    }
+
+    @SubscribeEvent
+    public void tickHook(TickEvent.ClientTickEvent event)
+    {
+        if (event.phase == TickEvent.Phase.END)
+            ticks = ticks + 1;
     }
 
 }

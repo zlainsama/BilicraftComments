@@ -1,6 +1,6 @@
 package lain.mods.bilicraftcomments.common;
 
-import lain.mods.bilicraftcomments.BilicraftComments;
+import lain.mods.bilicraftcomments.BilicraftCommentsClient;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.FMLEventChannel;
 import cpw.mods.fml.common.network.FMLNetworkEvent.ClientCustomPacketEvent;
@@ -32,7 +32,7 @@ public class PacketHandler
         switch (T)
         {
             case 1:
-                BilicraftComments.proxy.displayComment(event.packet);
+                BilicraftCommentsClient.proxy.displayComment(event.packet);
                 break;
         }
     }
@@ -43,7 +43,7 @@ public class PacketHandler
         switch (T)
         {
             case 1:
-                BilicraftComments.proxy.displayComment(event.packet);
+                BilicraftCommentsClient.proxy.displayComment(event.packet);
                 break;
         }
     }

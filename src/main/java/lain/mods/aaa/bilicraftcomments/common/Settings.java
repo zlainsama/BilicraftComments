@@ -1,7 +1,7 @@
 package lain.mods.bilicraftcomments.common;
 
 import java.util.Set;
-import lain.mods.bilicraftcomments.BilicraftComments;
+import lain.mods.bilicraftcomments.BilicraftCommentsClient;
 import net.minecraftforge.common.config.Configuration;
 import com.google.common.collect.Sets;
 
@@ -66,7 +66,7 @@ public class Settings
             maxLifespan = b_maxLifespan;
             commentInterval = b_commentInterval;
             whitelistMode = b_whitelistMode;
-            BilicraftComments.logger.warn("error loading config", e);
+            BilicraftCommentsClient.logger.warn("error loading config", e);
         }
     }
 

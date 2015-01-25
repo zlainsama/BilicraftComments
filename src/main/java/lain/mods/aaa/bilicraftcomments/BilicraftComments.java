@@ -5,10 +5,9 @@ import io.netty.buffer.Unpooled;
 import java.io.File;
 import lain.mods.bilicraftcomments.common.CommonProxy;
 import lain.mods.bilicraftcomments.common.Settings;
-import lain.mods.bilicraftcomments.utils.SimpleLanguageFileLoader;
+import lain.mods.bilicraftcomments.network.NetworkManager;
 import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.appender.FileAppender;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -20,16 +19,8 @@ import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 public class BilicraftComments
 {
 
-    @SidedProxy(serverSide = "lain.mods.bilicraftcomments.common.CommonProxy", clientSide = "lain.mods.bilicraftcomments.client.ClientProxy")
-    public static CommonProxy proxy;
-
-    public static File rootDir;
-    public static Configuration config;
-    public static Logger logger;
-
-    public static IPermissionManager manager;
-
-    public static final int logLimit = 33554432;
+    @SidedProxy(clientSide = "lain.mods.bilicraftcomments.network.NetworkManagerClient", serverSide = "lain.mods.bilicraftcomments.network.NetworkManager")
+    public static NetworkManager network;
 
     public static FMLProxyPacket createDisplayPacket(int mode, int lifespan, String text)
     {
@@ -58,22 +49,27 @@ public class BilicraftComments
         return String.format("/bcc_comment %d %d %s", mode, lifespan, text);
     }
 
+    @SidedProxy(serverSide = "lain.mods.bilicraftcomments.common.CommonProxy", clientSide = "lain.mods.bilicraftcomments.client.ClientProxy")
+    public static CommonProxy proxy;
+
+    public static File rootDir;
+
+    public static Configuration config;
+
+    public static Logger logger;
+
+    public static IPermissionManager manager;
+
+    public static final int logLimit = 33554432;
+
     @Mod.EventHandler
     public void init(FMLPreInitializationEvent event)
     {
         rootDir = event.getModConfigurationDirectory().getParentFile();
         config = new Configuration(event.getSuggestedConfigurationFile());
         logger = event.getModLog();
-        
-        FileAppender.createAppender("", append, locking, name, immediateFlush, ignore, bufferedIO, layout, filter, advertise, advertiseURI, config)
 
-        FileAppender a;
-        a.
-        
         Settings.reload(config);
-
-        SimpleLanguageFileLoader.loadSafe("/assets/bilicraftcomments/lang/en_US.lang", "en_US");
-        SimpleLanguageFileLoader.loadSafe("/assets/bilicraftcomments/lang/zh_CN.lang", "zh_CN");
     }
 
     @Mod.EventHandler

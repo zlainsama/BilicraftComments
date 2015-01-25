@@ -18,27 +18,27 @@ public class Translator
     public void send(ICommandSender receiver)
     {
         IChatComponent tmp = new ChatComponentTranslation(key, new Object[0]);
-        receiver.func_145747_a(tmp);
+        receiver.addChatMessage(tmp);
     }
 
     public void send(ICommandSender receiver, Object... objects)
     {
         IChatComponent tmp = new ChatComponentTranslation(key, objects);
-        receiver.func_145747_a(tmp);
+        receiver.addChatMessage(tmp);
     }
 
     public void sendWithColor(ICommandSender receiver, EnumChatFormatting color)
     {
         IChatComponent tmp = new ChatComponentTranslation(key, new Object[0]);
-        tmp.func_150256_b().func_150238_a(color);
-        receiver.func_145747_a(tmp);
+        tmp.getChatStyle().setColor(color);
+        receiver.addChatMessage(tmp);
     }
 
     public void sendWithColor(ICommandSender receiver, EnumChatFormatting color, Object... objects)
     {
         IChatComponent tmp = new ChatComponentTranslation(key, objects);
-        tmp.func_150256_b().func_150238_a(color);
-        receiver.func_145747_a(tmp);
+        tmp.getChatStyle().setColor(color);
+        receiver.addChatMessage(tmp);
     }
 
 }

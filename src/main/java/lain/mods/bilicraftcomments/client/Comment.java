@@ -1,6 +1,5 @@
 package lain.mods.bilicraftcomments.client;
 
-import lain.mods.bilicraftcomments.BilicraftComments;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
@@ -14,18 +13,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class Comment
 {
 
-    public static final ClientProxy proxy = (ClientProxy) BilicraftComments.proxy;
-
-    public static Minecraft client = null;
-    public static FontRenderer renderer = null;
-    public static ScaledResolution res = null;
-    public static int width = 320;
-    public static int height = 240;
-    public static int numSlots = 18;
-
     public static boolean isSlotOccupied(int slot, int mode, Comment exclusion, int stress, long ticks)
     {
-        for (Comment c : proxy.comments)
+        for (Comment c : ClientProxy.INSTANCE.comments)
         {
             if (c.slot != slot || c.mode != mode || c == exclusion)
                 continue;
@@ -62,6 +52,15 @@ public class Comment
         height = res.getScaledHeight();
         numSlots = (int) ((float) (height - 60) / (float) (renderer.FONT_HEIGHT + 1));
     }
+
+    public static Minecraft client = null;
+    public static FontRenderer renderer = null;
+    public static ScaledResolution res = null;
+    public static int width = 320;
+
+    public static int height = 240;
+
+    public static int numSlots = 18;
 
     public final int mode;
     public final String text;
@@ -205,7 +204,7 @@ public class Comment
         slot = -1;
         try
         {
-            client.ingameGUI.func_146158_b().func_146227_a(new ChatComponentText(text));
+            client.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(text));
         }
         catch (Throwable ignored)
         {
