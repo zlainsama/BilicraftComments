@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import lain.mods.bilicraftcomments.BilicraftCommentsClient;
+import lain.mods.bilicraftcomments.MCUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -84,7 +84,7 @@ public class ClientProxy
             int mode = dis.readInt();
             int lifespan = dis.readInt();
             String text = dis.readUTF();
-            if (!StringUtils.stripControlCodes(text).isEmpty())
+            if (!MCUtils.stripControlCodes(text).isEmpty())
             {
                 Comment comment = new Comment(mode, text, lifespan, ticks);
                 comment.onAdd();
