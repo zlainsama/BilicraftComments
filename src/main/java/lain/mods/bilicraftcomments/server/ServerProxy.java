@@ -26,7 +26,7 @@ import lain.mods.bilicraftcomments.server.command.CommandWhitelistRemove;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
@@ -165,29 +165,29 @@ public class ServerProxy
         DataInputStream dis = null;
         try
         {
-            EntityPlayerMP sender = ((NetHandlerPlayServer) event.handler).playerEntity;
+            EntityPlayerMP sender = ((NetHandlerPlayServer) event.getHandler()).playerEntity;
             if (ServerConfigs.whitelistMode && !whitelist.contains(sender))
             {
-                Messenger.sendWithColor(sender, Message.msgNotInWhitelist, EnumChatFormatting.DARK_RED);
+                Messenger.sendWithColor(sender, Message.msgNotInWhitelist, TextFormatting.DARK_RED);
                 return;
             }
             if (blacklist.contains(sender))
             {
-                Messenger.sendWithColor(sender, Message.msgInBlacklist, EnumChatFormatting.DARK_RED);
+                Messenger.sendWithColor(sender, Message.msgInBlacklist, TextFormatting.DARK_RED);
                 return;
             }
             if (!marker.checkTimeIfValid(sender, sender.worldObj.getTotalWorldTime(), ServerConfigs.commentInterval, false))
             {
-                Messenger.sendWithColor(sender, Message.msgTooFastToComment, EnumChatFormatting.DARK_RED);
+                Messenger.sendWithColor(sender, Message.msgTooFastToComment, TextFormatting.DARK_RED);
                 return;
             }
-            dis = new DataInputStream(new ByteBufInputStream(event.packet.payload()));
+            dis = new DataInputStream(new ByteBufInputStream(event.getPacket().payload()));
             int mode = dis.readInt();
             int lifespan = dis.readInt();
             String text = dis.readUTF().replace("&", "\u00a7").replace("\u00a7\u00a7", "&");
             if (!ServerConfigs.isModeAllowed(mode) || lifespan < ServerConfigs.minLifespan || lifespan > ServerConfigs.maxLifespan || MCUtils.stripControlCodes(text).isEmpty())
             {
-                Messenger.sendWithColor(sender, Message.msgInvalidArguments, EnumChatFormatting.DARK_RED);
+                Messenger.sendWithColor(sender, Message.msgInvalidArguments, TextFormatting.DARK_RED);
                 return;
             }
             chatLogger.info(String.format("[uuid:%s] [username:%s] [mode:%d] [lifespan:%d] %s", sender.getUniqueID().toString(), MCUtils.stripControlCodes(sender.getName()), mode, lifespan, text));

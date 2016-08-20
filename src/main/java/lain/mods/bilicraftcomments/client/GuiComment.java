@@ -5,7 +5,9 @@ import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -120,12 +122,12 @@ public class GuiComment extends GuiScreen
     public static void drawRectTexture(int x, int y, int w, int h, int u, int v, float zLevel)
     {
         Tessellator a = Tessellator.getInstance();
-        WorldRenderer b = a.getWorldRenderer();
-        b.startDrawingQuads();
-        b.addVertexWithUV((double) (x + 0), (double) (y + h), (double) zLevel, (double) ((float) (u + 0) * fW), (double) ((float) (v + h) * fH));
-        b.addVertexWithUV((double) (x + w), (double) (y + h), (double) zLevel, (double) ((float) (u + w) * fW), (double) ((float) (v + h) * fH));
-        b.addVertexWithUV((double) (x + w), (double) (y + 0), (double) zLevel, (double) ((float) (u + w) * fW), (double) ((float) (v + 0) * fH));
-        b.addVertexWithUV((double) (x + 0), (double) (y + 0), (double) zLevel, (double) ((float) (u + 0) * fW), (double) ((float) (v + 0) * fH));
+        VertexBuffer b = a.getBuffer();
+        b.begin(7, DefaultVertexFormats.POSITION_TEX);
+        b.pos((double) (x + 0), (double) (y + h), (double) zLevel).tex((double) ((float) (u + 0) * fW), (double) ((float) (v + h) * fH)).endVertex();
+        b.pos((double) (x + w), (double) (y + h), (double) zLevel).tex((double) ((float) (u + w) * fW), (double) ((float) (v + h) * fH)).endVertex();
+        b.pos((double) (x + w), (double) (y + 0), (double) zLevel).tex((double) ((float) (u + w) * fW), (double) ((float) (v + 0) * fH)).endVertex();
+        b.pos((double) (x + 0), (double) (y + 0), (double) zLevel).tex((double) ((float) (u + 0) * fW), (double) ((float) (v + 0) * fH)).endVertex();
         a.draw();
     }
 
@@ -264,7 +266,7 @@ public class GuiComment extends GuiScreen
         if (areaSettingsButton.isMouseHovering(par1, par2))
         {
             settingsOpened = !settingsOpened;
-            mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+            mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
         }
         if (settingsOpened)
         {

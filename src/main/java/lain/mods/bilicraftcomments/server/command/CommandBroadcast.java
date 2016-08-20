@@ -8,31 +8,31 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.PlayerNotFoundException;
-import net.minecraft.command.PlayerSelector;
+import net.minecraft.command.EntitySelector;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 
 public class CommandBroadcast extends CommandBase
 {
 
     @Override
-    public void execute(ICommandSender arg0, String[] arg1) throws CommandException
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
     {
-        if (arg1.length >= 4)
+        if (args.length >= 4)
         {
-            @SuppressWarnings("unchecked")
-            List<EntityPlayerMP> players = PlayerSelector.matchEntities(arg0, arg1[0], EntityPlayerMP.class);
+            List<EntityPlayerMP> players = EntitySelector.matchEntities(sender, args[0], EntityPlayerMP.class);
             if (players.isEmpty())
                 throw new PlayerNotFoundException();
-            int mode = parseInt(arg1[1], 0, 3);
-            int lifespan = parseInt(arg1[2], -1);
+            int mode = parseInt(args[1], 0, 3);
+            int lifespan = parseInt(args[2], -1);
             StringBuilder buf = new StringBuilder();
-            for (int i = 3; i < arg1.length; i++)
+            for (int i = 3; i < args.length; i++)
             {
                 if (i > 3)
                     buf.append(" ");
-                buf.append(arg1[i]);
+                buf.append(args[i]);
             }
             String text = buf.toString().trim().replace("&", "\u00a7").replace("\u00a7\u00a7", "&");
             FMLProxyPacket packet = ServerProxy.INSTANCE.createDisplayRequest(mode, lifespan, text);
@@ -41,7 +41,7 @@ public class CommandBroadcast extends CommandBase
         }
         else
         {
-            Messenger.sendWithColor(arg0, Message.msgBroadcastUsage, EnumChatFormatting.DARK_RED);
+            Messenger.sendWithColor(sender, Message.msgBroadcastUsage, TextFormatting.DARK_RED);
         }
     }
 
@@ -52,7 +52,7 @@ public class CommandBroadcast extends CommandBase
     }
 
     @Override
-    public String getName()
+    public String getCommandName()
     {
         return "bcc_broadcast";
     }

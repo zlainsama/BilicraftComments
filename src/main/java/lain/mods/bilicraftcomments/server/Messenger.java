@@ -1,9 +1,9 @@
 package lain.mods.bilicraftcomments.server;
 
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.ITextComponent;
 
 public class Messenger
 {
@@ -37,27 +37,27 @@ public class Messenger
 
     public static void send(ICommandSender receiver, Message msg)
     {
-        IChatComponent tmp = new ChatComponentTranslation(msg.key, new Object[0]);
+        ITextComponent tmp = new TextComponentTranslation(msg.key, new Object[0]);
         receiver.addChatMessage(tmp);
     }
 
     public static void send(ICommandSender receiver, Message msg, Object... objects)
     {
-        IChatComponent tmp = new ChatComponentTranslation(msg.key, objects);
+        ITextComponent tmp = new TextComponentTranslation(msg.key, objects);
         receiver.addChatMessage(tmp);
     }
 
-    public static void sendWithColor(ICommandSender receiver, Message msg, EnumChatFormatting color)
+    public static void sendWithColor(ICommandSender receiver, Message msg, TextFormatting color)
     {
-        IChatComponent tmp = new ChatComponentTranslation(msg.key, new Object[0]);
-        tmp.getChatStyle().setColor(color);
+        ITextComponent tmp = new TextComponentTranslation(msg.key, new Object[0]);
+        tmp.getStyle().setColor(color);
         receiver.addChatMessage(tmp);
     }
 
-    public static void sendWithColor(ICommandSender receiver, Message msg, EnumChatFormatting color, Object... objects)
+    public static void sendWithColor(ICommandSender receiver, Message msg, TextFormatting color, Object... objects)
     {
-        IChatComponent tmp = new ChatComponentTranslation(msg.key, objects);
-        tmp.getChatStyle().setColor(color);
+        ITextComponent tmp = new TextComponentTranslation(msg.key, objects);
+        tmp.getStyle().setColor(color);
         receiver.addChatMessage(tmp);
     }
 

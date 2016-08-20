@@ -7,15 +7,16 @@ import lain.mods.bilicraftcomments.server.ServerProxy;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.TextFormatting;
 
 public class CommandWhitelistAdd extends CommandBase
 {
 
     @Override
-    public void execute(ICommandSender arg0, String[] arg1) throws CommandException
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
     {
-        if (arg1.length > 0)
+        if (args.length > 0)
         {
             try
             {
@@ -26,7 +27,7 @@ public class CommandWhitelistAdd extends CommandBase
                 BilicraftCommentsServer.logger.fatal("error loading whitelist file: " + e.toString());
                 throw new RuntimeException(e);
             }
-            ServerProxy.INSTANCE.whitelist.add(arg1[0]);
+            ServerProxy.INSTANCE.whitelist.add(args[0]);
             try
             {
                 ServerProxy.INSTANCE.whitelist.saveFile(ServerProxy.INSTANCE.whitelist.currentFile);
@@ -36,10 +37,10 @@ public class CommandWhitelistAdd extends CommandBase
                 BilicraftCommentsServer.logger.fatal("error saving whitelist file: " + e.toString());
                 throw new RuntimeException(e);
             }
-            Messenger.sendWithColor(arg0, Message.msgWhitelistAdded, EnumChatFormatting.DARK_RED, arg1[0]);
+            Messenger.sendWithColor(sender, Message.msgWhitelistAdded, TextFormatting.DARK_RED, args[0]);
         }
         else
-            Messenger.sendWithColor(arg0, Message.msgWhitelistUsageAdd, EnumChatFormatting.DARK_RED);
+            Messenger.sendWithColor(sender, Message.msgWhitelistUsageAdd, TextFormatting.DARK_RED);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class CommandWhitelistAdd extends CommandBase
     }
 
     @Override
-    public String getName()
+    public String getCommandName()
     {
         return "bcc_whitelist_add";
     }

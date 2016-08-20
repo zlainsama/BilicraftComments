@@ -8,13 +8,14 @@ import lain.mods.bilicraftcomments.server.ServerProxy;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.TextFormatting;
 
 public class CommandReload extends CommandBase
 {
 
     @Override
-    public void execute(ICommandSender arg0, String[] arg1) throws CommandException
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
     {
         ServerConfigs.reload();
         try
@@ -35,7 +36,7 @@ public class CommandReload extends CommandBase
             BilicraftCommentsServer.logger.fatal("error loading blacklist file: " + e.toString());
             throw new RuntimeException(e);
         }
-        Messenger.sendWithColor(arg0, Message.msgReloaded, EnumChatFormatting.DARK_RED);
+        Messenger.sendWithColor(sender, Message.msgReloaded, TextFormatting.DARK_RED);
     }
 
     @Override
@@ -45,7 +46,7 @@ public class CommandReload extends CommandBase
     }
 
     @Override
-    public String getName()
+    public String getCommandName()
     {
         return "bcc_reload";
     }
