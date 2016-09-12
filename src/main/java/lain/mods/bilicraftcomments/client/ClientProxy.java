@@ -17,7 +17,6 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -47,7 +46,6 @@ public class ClientProxy
 
     private ClientProxy()
     {
-        FMLCommonHandler.instance().bus().register(this);
         MinecraftForge.EVENT_BUS.register(this);
 
         keyOpenCommentGui = new KeyBinding("key.openCommentGui", 0x17, "key.categories.multiplayer");
@@ -80,7 +78,7 @@ public class ClientProxy
         DataInputStream dis = null;
         try
         {
-            dis = new DataInputStream(new ByteBufInputStream(event.packet.payload()));
+            dis = new DataInputStream(new ByteBufInputStream(event.getPacket().payload()));
             int mode = dis.readInt();
             int lifespan = dis.readInt();
             String text = dis.readUTF();
@@ -111,7 +109,7 @@ public class ClientProxy
     @SubscribeEvent
     public void renderHook(RenderGameOverlayEvent.Post event)
     {
-        if (event.type == RenderGameOverlayEvent.ElementType.ALL)
+        if (event.getType() == RenderGameOverlayEvent.ElementType.ALL)
         {
             if (!comments.isEmpty())
             {
@@ -124,7 +122,7 @@ public class ClientProxy
                         comments.remove(comment);
                         continue;
                     }
-                    comment.update(ticks, event.partialTicks);
+                    comment.update(ticks, event.getPartialTicks());
                     comment.draw();
                 }
             }

@@ -3,7 +3,7 @@ package lain.mods.bilicraftcomments.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -47,7 +47,8 @@ public class Comment
     {
         client = FMLClientHandler.instance().getClient();
         renderer = client.fontRendererObj;
-        res = new ScaledResolution(client, client.displayWidth, client.displayHeight);
+        //res = new ScaledResolution(client, client.displayWidth, client.displayHeight);
+        res = new ScaledResolution(client);
         width = res.getScaledWidth();
         height = res.getScaledHeight();
         numSlots = (int) ((float) (height - 60) / (float) (renderer.FONT_HEIGHT + 1));
@@ -203,7 +204,7 @@ public class Comment
         slot = -1;
         try
         {
-            client.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(text));
+            client.ingameGUI.getChatGUI().printChatMessage(new TextComponentString(text));
         }
         catch (Throwable ignored)
         {
