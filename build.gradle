@@ -13,7 +13,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.10.x-v2"
+version = "1.10.x-v1"
 group= "lain.mods.bilicraftcomments"
 archivesBaseName = "BilicraftComments"
 

@@ -6,9 +6,9 @@ import lain.mods.bilicraftcomments.server.Messenger.Message;
 import lain.mods.bilicraftcomments.server.ServerProxy;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
+import net.minecraft.command.EntitySelector;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.PlayerNotFoundException;
-import net.minecraft.command.EntitySelector;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextFormatting;
@@ -46,15 +46,15 @@ public class CommandBroadcast extends CommandBase
     }
 
     @Override
-    public String getCommandUsage(ICommandSender arg0)
-    {
-        return null;
-    }
-
-    @Override
     public String getCommandName()
     {
         return "bcc_broadcast";
+    }
+
+    @Override
+    public String getCommandUsage(ICommandSender arg0)
+    {
+        return null;
     }
 
     @Override

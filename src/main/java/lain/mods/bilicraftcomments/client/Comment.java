@@ -47,7 +47,7 @@ public class Comment
     {
         client = FMLClientHandler.instance().getClient();
         renderer = client.fontRendererObj;
-        //res = new ScaledResolution(client, client.displayWidth, client.displayHeight);
+        // res = new ScaledResolution(client, client.displayWidth, client.displayHeight);
         res = new ScaledResolution(client);
         width = res.getScaledWidth();
         height = res.getScaledHeight();

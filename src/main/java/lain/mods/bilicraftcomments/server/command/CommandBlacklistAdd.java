@@ -44,15 +44,15 @@ public class CommandBlacklistAdd extends CommandBase
     }
 
     @Override
-    public String getCommandUsage(ICommandSender arg0)
-    {
-        return null;
-    }
-
-    @Override
     public String getCommandName()
     {
         return "bcc_blacklist_add";
+    }
+
+    @Override
+    public String getCommandUsage(ICommandSender arg0)
+    {
+        return null;
     }
 
     @Override

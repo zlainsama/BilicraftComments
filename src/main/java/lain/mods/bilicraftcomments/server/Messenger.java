@@ -1,9 +1,9 @@
 package lain.mods.bilicraftcomments.server;
 
 import net.minecraft.command.ICommandSender;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.ITextComponent;
 
 public class Messenger
 {

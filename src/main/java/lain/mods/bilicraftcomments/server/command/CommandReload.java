@@ -40,15 +40,15 @@ public class CommandReload extends CommandBase
     }
 
     @Override
-    public String getCommandUsage(ICommandSender arg0)
-    {
-        return null;
-    }
-
-    @Override
     public String getCommandName()
     {
         return "bcc_reload";
+    }
+
+    @Override
+    public String getCommandUsage(ICommandSender arg0)
+    {
+        return null;
     }
 
     @Override
