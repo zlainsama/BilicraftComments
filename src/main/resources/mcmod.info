@@ -1,16 +1,38 @@
-[
 {
-  "modid": "BilicraftComments",
-  "name": "BilicraftComments",
-  "description": "",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "https://github.com/zlainsama/bilicraftcomments",
-  "updateUrl": "https://github.com/zlainsama/bilicraftcomments/releases",
-  "authors": [ "zlainsama" ],
-  "credits": "kelas, 3TUSK",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": []
+  "modListVersion": 2,
+  "modList": [{
+    "modid": "bilicraftcomments",
+    "name": "BilicraftComments",
+    "description": "made for Bilicraft Server",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/zlainsama/bilicraftcomments",
+    "updateUrl": "https://github.com/zlainsama/bilicraftcomments/releases",
+    "authorList": ["zlainsama"],
+    "credits": "kelas, 3TUSK",
+    "logoFile": "",
+    "screenshots": [],
+    "parent": "",
+    "requiredMods": ["forge"],
+    "dependencies": [],
+    "dependants": [],
+    "useDependencyInformation": true
+  },{
+    "modid": "bilicraftcomments|client",
+    "name": "BilicraftComments|Client",
+    "description": "this is the client part",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/zlainsama/bilicraftcomments",
+    "updateUrl": "https://github.com/zlainsama/bilicraftcomments/releases",
+    "authorList": ["zlainsama"],
+    "credits": "kelas, 3TUSK",
+    "logoFile": "",
+    "screenshots": [],
+    "parent": "",
+    "requiredMods": ["forge"],
+    "dependencies": [],
+    "dependants": [],
+    "useDependencyInformation": true
+  }]
 }
-]

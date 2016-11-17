@@ -24,7 +24,7 @@ public class CommandBroadcast extends CommandBase
         {
             List<EntityPlayerMP> players = EntitySelector.matchEntities(sender, args[0], EntityPlayerMP.class);
             if (players.isEmpty())
-                throw new PlayerNotFoundException();
+                throw new PlayerNotFoundException("commands.generic.player.notFound", args[0]);
             int mode = parseInt(args[1], 0, 3);
             int lifespan = parseInt(args[2], -1);
             StringBuilder buf = new StringBuilder();
