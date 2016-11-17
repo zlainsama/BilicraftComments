@@ -19,7 +19,7 @@
     "useDependencyInformation": true
   },{
     "modid": "bilicraftcomments|client",
-    "name": "BilicraftComments",
+    "name": "BilicraftComments|Client",
     "description": "this is the client part",
     "version": "${version}",
     "mcversion": "${mcversion}",
