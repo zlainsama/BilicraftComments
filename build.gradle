@@ -13,15 +13,20 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.10.2-v1"
+version = "1.11-v1-test"
 group= "lain.mods.bilicraftcomments"
 archivesBaseName = "BilicraftComments"
 
+sourceCompatibility = targetCompatibility = "1.6"
+compileJava {
+    sourceCompatibility = targetCompatibility = "1.6"
+}
+
 minecraft {
-    version = "1.10.2-12.18.1.2014"
+    version = "1.11-13.19.0.2138"
     runDir = "run"
 
-    mappings = "snapshot_20160718"
+    mappings = "snapshot_20161111"
 }
 
 processResources
@@ -43,6 +48,3 @@ processResources
         exclude 'mcmod.info'
     }
 }
-
-sourceCompatibility = '1.7'
-targetCompatibility = '1.7'
