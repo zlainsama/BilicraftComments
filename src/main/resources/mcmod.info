@@ -17,5 +17,22 @@
     "dependencies": [],
     "dependants": [],
     "useDependencyInformation": true
+  },{
+    "modid": "bilicraftcomments|client",
+    "name": "BilicraftComments",
+    "description": "this is the client part",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/zlainsama/bilicraftcomments",
+    "updateUrl": "https://github.com/zlainsama/bilicraftcomments/releases",
+    "authorList": ["zlainsama"],
+    "credits": "kelas, 3TUSK",
+    "logoFile": "",
+    "screenshots": [],
+    "parent": "",
+    "requiredMods": ["forge"],
+    "dependencies": [],
+    "dependants": [],
+    "useDependencyInformation": true
   }]
 }
