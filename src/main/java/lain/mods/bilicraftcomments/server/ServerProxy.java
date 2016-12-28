@@ -168,17 +168,17 @@ public class ServerProxy
             EntityPlayerMP sender = ((NetHandlerPlayServer) event.getHandler()).playerEntity;
             if (ServerConfigs.whitelistMode && !whitelist.contains(sender))
             {
-                Messenger.sendWithColor(sender, Message.msgNotInWhitelist, TextFormatting.DARK_RED);
+                Messenger.sendWithColor(sender, Message.msgNotInWhitelist, TextFormatting.RED);
                 return;
             }
             if (blacklist.contains(sender))
             {
-                Messenger.sendWithColor(sender, Message.msgInBlacklist, TextFormatting.DARK_RED);
+                Messenger.sendWithColor(sender, Message.msgInBlacklist, TextFormatting.RED);
                 return;
             }
-            if (!marker.checkTimeIfValid(sender, sender.worldObj.getTotalWorldTime(), ServerConfigs.commentInterval, false))
+            if (!marker.checkTimeIfValid(sender, sender.world.getTotalWorldTime(), ServerConfigs.commentInterval, false))
             {
-                Messenger.sendWithColor(sender, Message.msgTooFastToComment, TextFormatting.DARK_RED);
+                Messenger.sendWithColor(sender, Message.msgTooFastToComment, TextFormatting.RED);
                 return;
             }
             dis = new DataInputStream(new ByteBufInputStream(event.getPacket().payload()));
@@ -187,11 +187,11 @@ public class ServerProxy
             String text = dis.readUTF().replace("&", "\u00a7").replace("\u00a7\u00a7", "&");
             if (!ServerConfigs.isModeAllowed(mode) || lifespan < ServerConfigs.minLifespan || lifespan > ServerConfigs.maxLifespan || MCUtils.stripControlCodes(text).isEmpty())
             {
-                Messenger.sendWithColor(sender, Message.msgInvalidArguments, TextFormatting.DARK_RED);
+                Messenger.sendWithColor(sender, Message.msgInvalidArguments, TextFormatting.RED);
                 return;
             }
             chatLogger.info(String.format("[uuid:%s] [username:%s] [mode:%d] [lifespan:%d] %s", sender.getUniqueID().toString(), MCUtils.stripControlCodes(sender.getName()), mode, lifespan, text));
-            marker.markTime(sender, sender.worldObj.getTotalWorldTime());
+            marker.markTime(sender, sender.world.getTotalWorldTime());
             FMLProxyPacket packet = createDisplayRequest(mode, lifespan, ServerConfigs.appendUsername ? MCUtils.stripControlCodes(sender.getName()) + ": " + text : text);
             channel.sendToAll(packet);
         }

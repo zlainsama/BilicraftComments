@@ -7,6 +7,7 @@ import lain.mods.bilicraftcomments.server.ServerProxy;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextFormatting;
 
@@ -37,28 +38,28 @@ public class CommandBlacklistRemove extends CommandBase
                 BilicraftCommentsServer.logger.fatal("error saving blacklist file: " + e.toString());
                 throw new RuntimeException(e);
             }
-            Messenger.sendWithColor(sender, Message.msgBlacklistRemoved, TextFormatting.DARK_RED, args[0]);
+            Messenger.sendWithColor(sender, Message.msgBlacklistRemoved, TextFormatting.RED, args[0]);
         }
         else
-            Messenger.sendWithColor(sender, Message.msgBlacklistUsageRemove, TextFormatting.DARK_RED);
+            throw new WrongUsageException(Message.msgBlacklistUsageRemove.key);
     }
 
     @Override
-    public String getCommandName()
+    public String getName()
     {
         return "bcc_blacklist_remove";
-    }
-
-    @Override
-    public String getCommandUsage(ICommandSender arg0)
-    {
-        return null;
     }
 
     @Override
     public int getRequiredPermissionLevel()
     {
         return 3;
+    }
+
+    @Override
+    public String getUsage(ICommandSender arg0)
+    {
+        return Message.msgBlacklistUsageRemove.key;
     }
 
 }

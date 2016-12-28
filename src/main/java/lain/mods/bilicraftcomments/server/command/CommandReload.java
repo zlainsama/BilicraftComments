@@ -36,25 +36,25 @@ public class CommandReload extends CommandBase
             BilicraftCommentsServer.logger.fatal("error loading blacklist file: " + e.toString());
             throw new RuntimeException(e);
         }
-        Messenger.sendWithColor(sender, Message.msgReloaded, TextFormatting.DARK_RED);
+        Messenger.sendWithColor(sender, Message.msgReloaded, TextFormatting.RED);
     }
 
     @Override
-    public String getCommandName()
+    public String getName()
     {
         return "bcc_reload";
-    }
-
-    @Override
-    public String getCommandUsage(ICommandSender arg0)
-    {
-        return null;
     }
 
     @Override
     public int getRequiredPermissionLevel()
     {
         return 3;
+    }
+
+    @Override
+    public String getUsage(ICommandSender arg0)
+    {
+        return Message.msgReloadUsage.key;
     }
 
 }

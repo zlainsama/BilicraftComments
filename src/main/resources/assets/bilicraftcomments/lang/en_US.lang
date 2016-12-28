@@ -3,11 +3,11 @@ BcC_NotInWhitelist=You need to be in comment whitelist to send comment.
 BcC_InBlacklist=You are in comment blacklist, so you can't send comment.
 BcC_TooFastToComment=You're fast! Aren't you? Take a break please.
 BcC_InvalidArguments=Some odd parameters are not allowed.
-BcC_Broadcast_Usage=Usage: /bcc_broadcast <player> <mode> <lifespan> <text ... >
-BcC_Whitelist_Usage_Add=Usage: /bcc_whitelist_add <username>
-BcC_Whitelist_Usage_Remove=Usage: /bcc_whitelist_remove <username>
-BcC_Blacklist_Usage_Add=Usage: /bcc_blacklist_add <username>
-BcC_Blacklist_Usage_Remove=Usage: /bcc_blacklist_remove <username>
+BcC_Broadcast_Usage=/bcc_broadcast <player> <mode> <lifespan> <text ... >
+BcC_Whitelist_Usage_Add=/bcc_whitelist_add <username>
+BcC_Whitelist_Usage_Remove=/bcc_whitelist_remove <username>
+BcC_Blacklist_Usage_Add=/bcc_blacklist_add <username>
+BcC_Blacklist_Usage_Remove=/bcc_blacklist_remove <username>
 BcC_Whitelist_Added='%1$s' added to comment whitelist.
 BcC_Whitelist_Removed='%1$s' removed from comment whitelist.
 BcC_Blacklist_Added='%1$s' added to comment blacklist.
@@ -16,3 +16,5 @@ BcC_NoPermission=You do not have permission to do that.
 BcC_Reloaded=Reloaded config and player lists.
 
 key.openCommentGui=Open Comment Gui
+
+BcC_Reload_Usage=/bcc_reload

@@ -1,7 +1,6 @@
 package lain.mods.bilicraftcomments.server.command;
 
 import java.util.List;
-import lain.mods.bilicraftcomments.server.Messenger;
 import lain.mods.bilicraftcomments.server.Messenger.Message;
 import lain.mods.bilicraftcomments.server.ServerProxy;
 import net.minecraft.command.CommandBase;
@@ -9,9 +8,9 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.EntitySelector;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.PlayerNotFoundException;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 
 public class CommandBroadcast extends CommandBase
@@ -41,26 +40,26 @@ public class CommandBroadcast extends CommandBase
         }
         else
         {
-            Messenger.sendWithColor(sender, Message.msgBroadcastUsage, TextFormatting.DARK_RED);
+            throw new WrongUsageException(Message.msgBroadcastUsage.key);
         }
     }
 
     @Override
-    public String getCommandName()
+    public String getName()
     {
         return "bcc_broadcast";
-    }
-
-    @Override
-    public String getCommandUsage(ICommandSender arg0)
-    {
-        return null;
     }
 
     @Override
     public int getRequiredPermissionLevel()
     {
         return 2;
+    }
+
+    @Override
+    public String getUsage(ICommandSender arg0)
+    {
+        return Message.msgBroadcastUsage.key;
     }
 
 }

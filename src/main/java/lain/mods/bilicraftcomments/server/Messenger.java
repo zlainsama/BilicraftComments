@@ -25,7 +25,8 @@ public class Messenger
         msgBlacklistAdded("BcC_Blacklist_Added"),
         msgBlacklistRemoved("BcC_Blacklist_Removed"),
         msgNoPermission("BcC_NoPermission"),
-        msgReloaded("BcC_Reloaded");
+        msgReloaded("BcC_Reloaded"),
+        msgReloadUsage("BcC_Reload_Usage");
 
         public final String key;
 
@@ -38,27 +39,27 @@ public class Messenger
     public static void send(ICommandSender receiver, Message msg)
     {
         ITextComponent tmp = new TextComponentTranslation(msg.key, new Object[0]);
-        receiver.addChatMessage(tmp);
+        receiver.sendMessage(tmp);
     }
 
     public static void send(ICommandSender receiver, Message msg, Object... objects)
     {
         ITextComponent tmp = new TextComponentTranslation(msg.key, objects);
-        receiver.addChatMessage(tmp);
+        receiver.sendMessage(tmp);
     }
 
     public static void sendWithColor(ICommandSender receiver, Message msg, TextFormatting color)
     {
         ITextComponent tmp = new TextComponentTranslation(msg.key, new Object[0]);
         tmp.getStyle().setColor(color);
-        receiver.addChatMessage(tmp);
+        receiver.sendMessage(tmp);
     }
 
     public static void sendWithColor(ICommandSender receiver, Message msg, TextFormatting color, Object... objects)
     {
         ITextComponent tmp = new TextComponentTranslation(msg.key, objects);
         tmp.getStyle().setColor(color);
-        receiver.addChatMessage(tmp);
+        receiver.sendMessage(tmp);
     }
 
 }

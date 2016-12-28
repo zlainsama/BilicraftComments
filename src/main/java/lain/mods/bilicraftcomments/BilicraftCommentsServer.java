@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = "bilicraftcomments", useMetadata = true, acceptedMinecraftVersions = "[1.11]")
+@Mod(modid = "bilicraftcomments", useMetadata = true, acceptedMinecraftVersions = "[1.11],[1.11.2]")
 public class BilicraftCommentsServer
 {
 
