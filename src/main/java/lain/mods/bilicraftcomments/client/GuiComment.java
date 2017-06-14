@@ -4,8 +4,8 @@ import java.io.IOException;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
@@ -122,7 +122,7 @@ public class GuiComment extends GuiScreen
     public static void drawRectTexture(int x, int y, int w, int h, int u, int v, float zLevel)
     {
         Tessellator a = Tessellator.getInstance();
-        VertexBuffer b = a.getBuffer();
+        BufferBuilder b = a.getBuffer();
         b.begin(7, DefaultVertexFormats.POSITION_TEX);
         b.pos((double) (x + 0), (double) (y + h), (double) zLevel).tex((double) ((float) (u + 0) * fW), (double) ((float) (v + h) * fH)).endVertex();
         b.pos((double) (x + w), (double) (y + h), (double) zLevel).tex((double) ((float) (u + w) * fW), (double) ((float) (v + h) * fH)).endVertex();
