@@ -165,7 +165,7 @@ public class ServerProxy
         DataInputStream dis = null;
         try
         {
-            EntityPlayerMP sender = ((NetHandlerPlayServer) event.getHandler()).playerEntity;
+            EntityPlayerMP sender = ((NetHandlerPlayServer) event.getHandler()).player;
             if (ServerConfigs.whitelistMode && !whitelist.contains(sender))
             {
                 Messenger.sendWithColor(sender, Message.msgNotInWhitelist, TextFormatting.RED);

@@ -196,7 +196,7 @@ public class GuiComment extends GuiScreen
                     break;
                 }
             }
-            drawString(mc.fontRendererObj, String.format("%.1f", (float) lifespan / 20F), areaSettings.x + 33, areaSettings.y + 105, 0xFFFFFF);
+            drawString(mc.fontRenderer, String.format("%.1f", (float) lifespan / 20F), areaSettings.x + 33, areaSettings.y + 105, 0xFFFFFF);
         }
         super.drawScreen(par1, par2, par3);
     }
@@ -220,7 +220,7 @@ public class GuiComment extends GuiScreen
     public void initGui()
     {
         Keyboard.enableRepeatEvents(true);
-        inputField = new GuiTextField(0, fontRendererObj, 4, height - 12, width - 4, 12);
+        inputField = new GuiTextField(0, fontRenderer, 4, height - 12, width - 4, 12);
         inputField.setMaxStringLength(100);
         inputField.setEnableBackgroundDrawing(false);
         inputField.setFocused(true);
