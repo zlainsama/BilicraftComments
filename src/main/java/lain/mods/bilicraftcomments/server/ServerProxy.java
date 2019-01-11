@@ -1,8 +1,5 @@
 package lain.mods.bilicraftcomments.server;
 
-import io.netty.buffer.ByteBufInputStream;
-import io.netty.buffer.ByteBufOutputStream;
-import io.netty.buffer.Unpooled;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -14,6 +11,9 @@ import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import io.netty.buffer.ByteBufInputStream;
+import io.netty.buffer.ByteBufOutputStream;
+import io.netty.buffer.Unpooled;
 import lain.mods.bilicraftcomments.BilicraftCommentsServer;
 import lain.mods.bilicraftcomments.MCUtils;
 import lain.mods.bilicraftcomments.server.Messenger.Message;
@@ -37,24 +37,25 @@ import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 public class ServerProxy
 {
 
+    public static final ServerProxy INSTANCE = new ServerProxy();
+
+    public static final String TARGET = "BcC|C";
+    public static final String LOCAL = "BcC|S";
+
+    public static final int logLimit = 33554432;
+
     public static void setup()
     {
         if (INSTANCE == null)
             throw new RuntimeException();
     }
 
-    public static final ServerProxy INSTANCE = new ServerProxy();
-
-    public static final String TARGET = "BcC|C";
-    public static final String LOCAL = "BcC|S";
     public FMLEventChannel channel;
 
     public final JsonPlayerList whitelist = new JsonPlayerList();
     public final JsonPlayerList blacklist = new JsonPlayerList();
     public final PerPlayerTimeMarker marker = new PerPlayerTimeMarker("timeComment", true);
     public final Logger chatLogger = Logger.getLogger(LOCAL);
-
-    public static final int logLimit = 33554432;
 
     private ServerProxy()
     {

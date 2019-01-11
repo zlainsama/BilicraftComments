@@ -2,11 +2,24 @@ package lain.mods.bilicraftcomments.server;
 
 import java.io.File;
 import java.util.Set;
-import net.minecraftforge.common.config.Configuration;
 import com.google.common.collect.Sets;
+import net.minecraftforge.common.config.Configuration;
 
 public class ServerConfigs
 {
+
+    private static Configuration config;
+
+    public static String allowedMode = "0;1;2";
+    public static int minLifespan = 40;
+    public static int maxLifespan = 400;
+    public static int commentInterval = 100;
+    public static boolean whitelistMode = true;
+    public static boolean appendUsername = true;
+    public static boolean allowLANServer = false;
+
+    private static Set<Integer> sModes = Sets.newHashSet();
+    private static int hModes = 0;
 
     public static boolean isModeAllowed(int mode)
     {
@@ -55,18 +68,5 @@ public class ServerConfigs
         if (config.hasChanged())
             config.save();
     }
-
-    private static Configuration config;
-
-    public static String allowedMode = "0;1;2";
-    public static int minLifespan = 40;
-    public static int maxLifespan = 400;
-    public static int commentInterval = 100;
-    public static boolean whitelistMode = true;
-    public static boolean appendUsername = true;
-    public static boolean allowLANServer = false;
-
-    private static Set<Integer> sModes = Sets.newHashSet();
-    private static int hModes = 0;
 
 }

@@ -1,6 +1,9 @@
 package lain.mods.bilicraftcomments.client;
 
 import java.io.IOException;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
@@ -11,9 +14,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class GuiComment extends GuiScreen
@@ -119,6 +119,15 @@ public class GuiComment extends GuiScreen
         }
     }
 
+    public static final ResourceLocation resTexture = new ResourceLocation("bilicraftcomments", "gui/gui.png");
+
+    public static boolean settingsOpened = false;
+    public static int mode = 0;
+    public static int lifespan = 200;
+
+    public static final float fW = 0.00393700787401574803149606299213F;// 254
+    public static final float fH = 0.00357142857142857142857142857143F;// 280
+
     public static void drawRectTexture(int x, int y, int w, int h, int u, int v, float zLevel)
     {
         Tessellator a = Tessellator.getInstance();
@@ -131,18 +140,10 @@ public class GuiComment extends GuiScreen
         a.draw();
     }
 
-    public static final ResourceLocation resTexture = new ResourceLocation("bilicraftcomments", "gui/gui.png");
-
-    public static boolean settingsOpened = false;
-    public static int mode = 0;
-    public static int lifespan = 200;
-
     protected GuiTextField inputField;
+
     protected Rect areaSettingsButton;
     protected Rect areaSettings;
-
-    public static final float fW = 0.00393700787401574803149606299213F;// 254
-    public static final float fH = 0.00357142857142857142857142857143F;// 280
 
     public boolean doesGuiPauseGame()
     {

@@ -1,13 +1,13 @@
 package lain.mods.bilicraftcomments.client;
 
-import io.netty.buffer.ByteBufInputStream;
-import io.netty.buffer.ByteBufOutputStream;
-import io.netty.buffer.Unpooled;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import io.netty.buffer.ByteBufInputStream;
+import io.netty.buffer.ByteBufOutputStream;
+import io.netty.buffer.Unpooled;
 import lain.mods.bilicraftcomments.BilicraftCommentsClient;
 import lain.mods.bilicraftcomments.MCUtils;
 import net.minecraft.client.Minecraft;
@@ -28,16 +28,17 @@ import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 public class ClientProxy
 {
 
+    public static final ClientProxy INSTANCE = new ClientProxy();
+
+    private static final String TARGET = "BcC|S";
+    private static final String LOCAL = "BcC|C";
+
     public static void setup()
     {
         if (INSTANCE == null)
             throw new RuntimeException();
     }
 
-    public static final ClientProxy INSTANCE = new ClientProxy();
-
-    private static final String TARGET = "BcC|S";
-    private static final String LOCAL = "BcC|C";
     private FMLEventChannel channel;
 
     protected final List<Comment> comments = new CopyOnWriteArrayList<Comment>();

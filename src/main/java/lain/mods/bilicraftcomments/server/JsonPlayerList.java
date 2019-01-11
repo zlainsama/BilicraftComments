@@ -9,12 +9,12 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.Set;
-import lain.mods.bilicraftcomments.MCUtils;
-import net.minecraft.entity.player.EntityPlayer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import lain.mods.bilicraftcomments.MCUtils;
+import net.minecraft.entity.player.EntityPlayer;
 
 public class JsonPlayerList
 {

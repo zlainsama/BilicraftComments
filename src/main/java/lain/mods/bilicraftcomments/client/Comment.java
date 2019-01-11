@@ -1,5 +1,6 @@
 package lain.mods.bilicraftcomments.client;
 
+import org.lwjgl.opengl.GL11;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
@@ -7,11 +8,18 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class Comment
 {
+
+    public static Minecraft client = null;
+    public static FontRenderer renderer = null;
+    public static ScaledResolution res = null;
+
+    public static int width = 320;
+    public static int height = 240;
+    public static int numSlots = 18;
 
     public static boolean isSlotOccupied(int slot, int mode, Comment exclusion, int stress, long ticks)
     {
@@ -21,23 +29,23 @@ public class Comment
                 continue;
             switch (mode)
             {
-                case 0:
-                    if (c.x + (c.textWidth() >> stress) + 2 > width)
-                        return true;
-                    break;
-                case 1:
-                    if (c.lifespan <= 0 || (ticks < c.ticksCreated + ((c.lifespan + c.expandedLife) >> stress)))
-                        return true;
-                    break;
-                case 2:
-                    if (c.lifespan <= 0 || (ticks < c.ticksCreated + ((c.lifespan + c.expandedLife) >> stress)))
-                        return true;
-                    break;
-                case 3:
-                    int w = c.textWidth();
-                    if (c.x + (w - w >> stress) < 2)
-                        return true;
-                    break;
+            case 0:
+                if (c.x + (c.textWidth() >> stress) + 2 > width)
+                    return true;
+                break;
+            case 1:
+                if (c.lifespan <= 0 || (ticks < c.ticksCreated + ((c.lifespan + c.expandedLife) >> stress)))
+                    return true;
+                break;
+            case 2:
+                if (c.lifespan <= 0 || (ticks < c.ticksCreated + ((c.lifespan + c.expandedLife) >> stress)))
+                    return true;
+                break;
+            case 3:
+                int w = c.textWidth();
+                if (c.x + (w - w >> stress) < 2)
+                    return true;
+                break;
             }
         }
         return false;
@@ -47,20 +55,13 @@ public class Comment
     {
         client = FMLClientHandler.instance().getClient();
         renderer = client.fontRenderer;
-        // res = new ScaledResolution(client, client.displayWidth, client.displayHeight);
+        // res = new ScaledResolution(client, client.displayWidth,
+        // client.displayHeight);
         res = new ScaledResolution(client);
         width = res.getScaledWidth();
         height = res.getScaledHeight();
         numSlots = (int) ((float) (height - 60) / (float) (renderer.FONT_HEIGHT + 1));
     }
-
-    public static Minecraft client = null;
-    public static FontRenderer renderer = null;
-    public static ScaledResolution res = null;
-
-    public static int width = 320;
-    public static int height = 240;
-    public static int numSlots = 18;
 
     public final int mode;
     public final String text;
@@ -90,88 +91,88 @@ public class Comment
             int s = 0;
             switch (mode)
             {
-                case 0: // Normal
-                    do
+            case 0: // Normal
+                do
+                {
+                    for (int i = 0; i < numSlots; i++)
                     {
-                        for (int i = 0; i < numSlots; i++)
+                        int j = (int) Math.round(Math.random() * (numSlots - 1));
+                        if (!isSlotOccupied(j, mode, this, s, ticks))
                         {
-                            int j = (int) Math.round(Math.random() * (numSlots - 1));
-                            if (!isSlotOccupied(j, mode, this, s, ticks))
-                            {
-                                slot = j;
-                                break;
-                            }
-                        }
-                        // for (int i = 0; i < numSlots; i++)
-                        // {
-                        // if (!isSlotOccupied(i, mode, this, s, ticks))
-                        // {
-                        // slot = i;
-                        // break;
-                        // }
-                        // }
-                        if (slot != -1)
+                            slot = j;
                             break;
+                        }
                     }
-                    while (s++ < 3);
-                    break;
-                case 1: // Top
-                    do
+                    // for (int i = 0; i < numSlots; i++)
+                    // {
+                    // if (!isSlotOccupied(i, mode, this, s, ticks))
+                    // {
+                    // slot = i;
+                    // break;
+                    // }
+                    // }
+                    if (slot != -1)
+                        break;
+                }
+                while (s++ < 3);
+                break;
+            case 1: // Top
+                do
+                {
+                    for (int i = 0; i < numSlots; i++)
                     {
-                        for (int i = 0; i < numSlots; i++)
+                        if (!isSlotOccupied(i, mode, this, s, ticks))
                         {
-                            if (!isSlotOccupied(i, mode, this, s, ticks))
-                            {
-                                slot = i;
-                                break;
-                            }
-                        }
-                        if (slot != -1)
+                            slot = i;
                             break;
+                        }
                     }
-                    while (s++ < 3);
-                    break;
-                case 2: // Bottom
-                    do
+                    if (slot != -1)
+                        break;
+                }
+                while (s++ < 3);
+                break;
+            case 2: // Bottom
+                do
+                {
+                    for (int i = numSlots - 1; i >= 0; i--)
                     {
-                        for (int i = numSlots - 1; i >= 0; i--)
+                        if (!isSlotOccupied(i, mode, this, s, ticks))
                         {
-                            if (!isSlotOccupied(i, mode, this, s, ticks))
-                            {
-                                slot = i;
-                                break;
-                            }
-                        }
-                        if (slot != -1)
+                            slot = i;
                             break;
+                        }
                     }
-                    while (s++ < 3);
-                    break;
-                case 3: // Backward
-                    do
+                    if (slot != -1)
+                        break;
+                }
+                while (s++ < 3);
+                break;
+            case 3: // Backward
+                do
+                {
+                    for (int i = 0; i < numSlots; i++)
                     {
-                        for (int i = 0; i < numSlots; i++)
+                        int j = (int) Math.round(Math.random() * (numSlots - 1));
+                        if (!isSlotOccupied(j, mode, this, s, ticks))
                         {
-                            int j = (int) Math.round(Math.random() * (numSlots - 1));
-                            if (!isSlotOccupied(j, mode, this, s, ticks))
-                            {
-                                slot = j;
-                                break;
-                            }
-                        }
-                        // for (int i = 0; i < numSlots; i++)
-                        // {
-                        // if (!isSlotOccupied(i, mode, this, s, ticks))
-                        // {
-                        // slot = i;
-                        // break;
-                        // }
-                        // }
-                        if (slot != -1)
+                            slot = j;
                             break;
+                        }
                     }
-                    while (s++ < 3);
-                    break;
+                    // for (int i = 0; i < numSlots; i++)
+                    // {
+                    // if (!isSlotOccupied(i, mode, this, s, ticks))
+                    // {
+                    // slot = i;
+                    // break;
+                    // }
+                    // }
+                    if (slot != -1)
+                        break;
+                }
+                while (s++ < 3);
+                break;
             }
         }
         if (slot == -1)
@@ -227,18 +228,18 @@ public class Comment
             int w = textWidth();
             switch (mode)
             {
-                case 0:
-                    f2 = 1F - f1;
-                    x = (int) (f2 * (width + w)) - w;
-                    break;
-                case 1:
-                case 2:
-                    x = (width - w) >> 1;
-                    break;
-                case 3:
-                    f2 = f1;
-                    x = (int) (f2 * (width + w)) - w;
-                    break;
+            case 0:
+                f2 = 1F - f1;
+                x = (int) (f2 * (width + w)) - w;
+                break;
+            case 1:
+            case 2:
+                x = (width - w) >> 1;
+                break;
+            case 3:
+                f2 = f1;
+                x = (int) (f2 * (width + w)) - w;
+                break;
             }
             y = 2 + slot * (renderer.FONT_HEIGHT + 1);
         }
