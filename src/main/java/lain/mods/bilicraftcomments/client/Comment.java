@@ -29,23 +29,23 @@ public class Comment
                 continue;
             switch (mode)
             {
-            case 0:
-                if (c.x + (c.textWidth() >> stress) + 2 > width)
-                    return true;
-                break;
-            case 1:
-                if (c.lifespan <= 0 || (ticks < c.ticksCreated + ((c.lifespan + c.expandedLife) >> stress)))
-                    return true;
-                break;
-            case 2:
-                if (c.lifespan <= 0 || (ticks < c.ticksCreated + ((c.lifespan + c.expandedLife) >> stress)))
-                    return true;
-                break;
-            case 3:
-                int w = c.textWidth();
-                if (c.x + (w - w >> stress) < 2)
-                    return true;
-                break;
+                case 0:
+                    if (c.x + (c.textWidth() >> stress) + 2 > width)
+                        return true;
+                    break;
+                case 1:
+                    if (c.lifespan <= 0 || (ticks < c.ticksCreated + ((c.lifespan + c.expandedLife) >> stress)))
+                        return true;
+                    break;
+                case 2:
+                    if (c.lifespan <= 0 || (ticks < c.ticksCreated + ((c.lifespan + c.expandedLife) >> stress)))
+                        return true;
+                    break;
+                case 3:
+                    int w = c.textWidth();
+                    if (c.x + (w - w >> stress) < 2)
+                        return true;
+                    break;
             }
         }
         return false;
@@ -91,88 +91,88 @@ public class Comment
             int s = 0;
             switch (mode)
             {
-            case 0: // Normal
-                do
-                {
-                    for (int i = 0; i < numSlots; i++)
+                case 0: // Normal
+                    do
                     {
-                        int j = (int) Math.round(Math.random() * (numSlots - 1));
-                        if (!isSlotOccupied(j, mode, this, s, ticks))
+                        for (int i = 0; i < numSlots; i++)
                         {
-                            slot = j;
-                            break;
+                            int j = (int) Math.round(Math.random() * (numSlots - 1));
+                            if (!isSlotOccupied(j, mode, this, s, ticks))
+                            {
+                                slot = j;
+                                break;
+                            }
                         }
+                        // for (int i = 0; i < numSlots; i++)
+                        // {
+                        // if (!isSlotOccupied(i, mode, this, s, ticks))
+                        // {
+                        // slot = i;
+                        // break;
+                        // }
+                        // }
+                        if (slot != -1)
+                            break;
                     }
-                    // for (int i = 0; i < numSlots; i++)
-                    // {
-                    // if (!isSlotOccupied(i, mode, this, s, ticks))
-                    // {
-                    // slot = i;
-                    // break;
-                    // }
-                    // }
-                    if (slot != -1)
-                        break;
-                }
-                while (s++ < 3);
-                break;
-            case 1: // Top
-                do
-                {
-                    for (int i = 0; i < numSlots; i++)
+                    while (s++ < 3);
+                    break;
+                case 1: // Top
+                    do
                     {
-                        if (!isSlotOccupied(i, mode, this, s, ticks))
+                        for (int i = 0; i < numSlots; i++)
                         {
-                            slot = i;
-                            break;
+                            if (!isSlotOccupied(i, mode, this, s, ticks))
+                            {
+                                slot = i;
+                                break;
+                            }
                         }
+                        if (slot != -1)
+                            break;
                     }
-                    if (slot != -1)
-                        break;
-                }
-                while (s++ < 3);
-                break;
-            case 2: // Bottom
-                do
-                {
-                    for (int i = numSlots - 1; i >= 0; i--)
+                    while (s++ < 3);
+                    break;
+                case 2: // Bottom
+                    do
                     {
-                        if (!isSlotOccupied(i, mode, this, s, ticks))
+                        for (int i = numSlots - 1; i >= 0; i--)
                         {
-                            slot = i;
-                            break;
+                            if (!isSlotOccupied(i, mode, this, s, ticks))
+                            {
+                                slot = i;
+                                break;
+                            }
                         }
+                        if (slot != -1)
+                            break;
                     }
-                    if (slot != -1)
-                        break;
-                }
-                while (s++ < 3);
-                break;
-            case 3: // Backward
-                do
-                {
-                    for (int i = 0; i < numSlots; i++)
+                    while (s++ < 3);
+                    break;
+                case 3: // Backward
+                    do
                     {
-                        int j = (int) Math.round(Math.random() * (numSlots - 1));
-                        if (!isSlotOccupied(j, mode, this, s, ticks))
+                        for (int i = 0; i < numSlots; i++)
                         {
-                            slot = j;
-                            break;
+                            int j = (int) Math.round(Math.random() * (numSlots - 1));
+                            if (!isSlotOccupied(j, mode, this, s, ticks))
+                            {
+                                slot = j;
+                                break;
+                            }
                         }
+                        // for (int i = 0; i < numSlots; i++)
+                        // {
+                        // if (!isSlotOccupied(i, mode, this, s, ticks))
+                        // {
+                        // slot = i;
+                        // break;
+                        // }
+                        // }
+                        if (slot != -1)
+                            break;
                     }
-                    // for (int i = 0; i < numSlots; i++)
-                    // {
-                    // if (!isSlotOccupied(i, mode, this, s, ticks))
-                    // {
-                    // slot = i;
-                    // break;
-                    // }
-                    // }
-                    if (slot != -1)
-                        break;
-                }
-                while (s++ < 3);
-                break;
+                    while (s++ < 3);
+                    break;
             }
         }
         if (slot == -1)
@@ -228,18 +228,18 @@ public class Comment
             int w = textWidth();
             switch (mode)
             {
-            case 0:
-                f2 = 1F - f1;
-                x = (int) (f2 * (width + w)) - w;
-                break;
-            case 1:
-            case 2:
-                x = (width - w) >> 1;
-                break;
-            case 3:
-                f2 = f1;
-                x = (int) (f2 * (width + w)) - w;
-                break;
+                case 0:
+                    f2 = 1F - f1;
+                    x = (int) (f2 * (width + w)) - w;
+                    break;
+                case 1:
+                case 2:
+                    x = (width - w) >> 1;
+                    break;
+                case 3:
+                    f2 = f1;
+                    x = (int) (f2 * (width + w)) - w;
+                    break;
             }
             y = 2 + slot * (renderer.FONT_HEIGHT + 1);
         }
